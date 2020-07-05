@@ -1,0 +1,7 @@
+#!/usr/bin/make -f
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+
+install/PACKAGE::
+	install -pd $(DEB_DESTDIR)/usr/bin
+	install -pm 755 PACKAGE $(DEB_DESTDIR)/usr/bin

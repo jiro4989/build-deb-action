@@ -1,46 +1,48 @@
 name: Test
 on:
   push:
-    branches:
-      - master
   pull_request:
 jobs:
   test-check:
-    name: runner / <linter-name> (github-check)
+    name: runner / build-deb-action (github-check)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: |
+          echo -e "echo hello" > testbin
+          chmod +x testbin
       - uses: ./
         with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-check
-          level: info
-          locale: "US"
+          package: testbin
+          maintainer: jiro4989
+          version: 'v1.0.0'
+          arch: 'x86_64'
+      - run: sudo dpkg -i *.deb
+      - run: which testbin
+      - run: testbin
 
   test-pr-check:
     if: github.event_name == 'pull_request'
-    name: runner / <linter-name> (github-pr-check)
+    name: runner / build-deb-action (github-pr-check)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-check
-          level: warning
-          locale: "US"
-          workdir: ./testdata/subdir/
+          package: testbin
+          maintainer: jiro4989
+          version: 'v1.0.0'
+          arch: 'x86_64'
 
   test-pr-review:
     if: github.event_name == 'pull_request'
-    name: runner / <linter-name> (github-pr-review)
+    name: runner / build-deb-action (github-pr-review)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-review
-          level: error
-          locale: "US"
-          reviewdog_flags: -filter-mode=file -fail-on-error
+          package: testbin
+          maintainer: jiro4989
+          version: 'v1.0.0'
+          arch: 'x86_64'

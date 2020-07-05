@@ -1,17 +1,22 @@
-FROM alpine:3.12
+FROM ubuntu:20.04
 
-ENV REVIEWDOG_VERSION=v0.10.1
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update -yqq && \
+    apt-get install -y \
+            devscripts \
+            build-essential \
+            cdbs \
+            && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
+ENV PATH /root/.nimble/bin:$PATH
+RUN curl https://nim-lang.org/choosenim/init.sh -sSf > init.sh
+RUN sh init.sh -y \
+    && choosenim stable
+COPY tools /tools
+RUN cd /tools && nimble install -Y
 
-# hadolint ignore=DL3006
-RUN apk --no-cache add git
-
-RUN wget -O - -q https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s -- -b /usr/local/bin/ ${REVIEWDOG_VERSION}
-
-# TODO: Install a linter and/or change docker image as you need.
-RUN wget -O - -q https://git.io/misspell | sh -s -- -b /usr/local/bin/
-
-COPY entrypoint.sh /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
+COPY template /template
+COPY entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["entrypoint.sh"]
