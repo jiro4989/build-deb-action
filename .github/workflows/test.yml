@@ -3,7 +3,7 @@ on:
   push:
   pull_request:
 jobs:
-  test-check:
+  test-script:
     name: runner / build-deb-action (github-check)
     runs-on: ubuntu-latest
     steps:
@@ -21,28 +21,25 @@ jobs:
       - run: which testbin
       - run: testbin
 
-  test-pr-check:
-    if: github.event_name == 'pull_request'
-    name: runner / build-deb-action (github-pr-check)
+  test-nim-package:
+    name: runner / build-deb-action (github-check)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: jiro4989/setup-nim-action@v1
+      - run: |
+          git clone https://github.com/jiro4989/nimjson app
+          pushd app
+          nimble build -Y
+          cp bin/nimjson ../
+          rm -rf app
+          popd
       - uses: ./
         with:
-          package: testbin
+          package: nimjson
           maintainer: jiro4989
           version: 'v1.0.0'
           arch: 'x86_64'
-
-  test-pr-review:
-    if: github.event_name == 'pull_request'
-    name: runner / build-deb-action (github-pr-review)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ./
-        with:
-          package: testbin
-          maintainer: jiro4989
-          version: 'v1.0.0'
-          arch: 'x86_64'
+      - run: sudo dpkg -i *.deb
+      - run: which nimjson
+      - run: nimjson -h
