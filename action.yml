@@ -1,37 +1,21 @@
 name: 'TODO: Run <linter-name> with reviewdog'
 description: 'TODO: 🐶 Run <linter-name> with reviewdog on pull requests to improve code review experience.'
-author: 'TODO: <your-name>'
+author: 'jiro4989'
 inputs:
-  github_token:
-    description: 'GITHUB_TOKEN'
-    default: '${{ github.token }}'
-  workdir:
+  package:
     description: 'Working directory relative to the root directory.'
     default: '.'
-  ### Flags for reviewdog ###
-  level:
+  maintainer:
     description: 'Report level for reviewdog [info,warning,error]'
     default: 'error'
-  reporter:
+  version:
     description: 'Reporter of reviewdog command [github-pr-check,github-pr-review].'
     default: 'github-pr-check'
-  filter_mode:
+  arch:
     description: |
       Filtering mode for the reviewdog command [added,diff_context,file,nofilter].
       Default is added.
-    default: 'added'
-  fail_on_error:
-    description: |
-      Exit code for reviewdog when errors are found [true,false]
-      Default is `false`.
-    default: 'false'
-  reviewdog_flags:
-    description: 'Additional reviewdog flags'
-    default: ''
-  ### Flags for <linter-name> ###
-  locale:
-    description: '-locale flag of misspell. (US/UK)'
-    default: ''
+    default: 'x86_64'
 runs:
   using: 'docker'
   image: 'Dockerfile'

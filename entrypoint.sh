@@ -1,17 +1,25 @@
 #!/bin/sh
-set -e
 
-if [ -n "${GITHUB_WORKSPACE}" ] ; then
-  cd "${GITHUB_WORKSPACE}/${INPUT_WORKDIR}" || exit
-fi
+set -eux
 
-export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
+export DEBIAN_DIR="/template/debian"
+export PACKAGE="$INPUT_PACKAGE"
+export MAINTAINER="$INPUT_MAINTAINER"
+export VERSION="$INPUT_VERSION"
+export ARCH="$INPUT_ARCH"
+/replacetool
 
-misspell -locale="${INPUT_LOCALE}" . \
-  | reviewdog -efm="%f:%l:%c: %m" \
-      -name="linter-name (misspell)" \
-      -reporter="${INPUT_REPORTER:-github-pr-check}" \
-      -filter-mode="${INPUT_FILTER_MODE}" \
-      -fail-on-error="${INPUT_FAIL_ON_ERROR}" \
-      -level="${INPUT_LEVEL}" \
-      ${INPUT_REVIEWDOG_FLAGS}
+WORKDIR="/tmp/work"
+PACKAGE_DIR="$WORKDIR/$PACKAGE"
+
+mkdir -p /tmp/work/
+cp -r /template "$PACKAGE_DIR"
+cp -p "$PACKAGE" "$PACKAGE_DIR"
+(
+  cd "$PACKAGE_DIR"
+  debian/rules build
+  yes | debuild -us -uc
+)
+cp -p "$WORKDIR/"*.deb .
+
+ls ./*.deb
