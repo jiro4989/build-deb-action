@@ -1,4 +1,29 @@
-import os, strutils
+import os, strutils, parseopt
+
+type
+  Options = object
+    debianDir, package, maintainer, version, arch: string
+
+proc getCmdOpts(params: seq[string]): Options =
+  var optParser = initOptParser(params)
+  for kind, key, val in optParser.getopt():
+    case kind
+    of cmdLongOption, cmdShortOption:
+      case key
+      of "debian-dir", "d":
+        result.debianDir = val
+      of "package", "p":
+        result.package = val
+      of "maintainer", "m":
+        result.maintainer = val
+      of "version", "v":
+        result.version = val
+      of "arch", "a":
+        result.arch = val
+    of cmdEnd:
+      assert false # cannot happen
+    else:
+      assert false
 
 proc fix(body, package, maintainer, version, arch: string): string =
   result =
@@ -15,15 +40,17 @@ proc fixFile(file, package, maintainer, version, arch: string) =
   writeFile(file, fixedBody)
 
 let
-  debDir = getEnv("DEBIAN_DIR")
-  controlFile = debDir/"control"
-  rulesFile = debDir/"rules"
-  changelog = debDir/"changelog"
+  args = commandLineParams()
+  params = getCmdOpts(args)
 
-  package = getEnv("PACKAGE")
-  maintainer = getEnv("MAINTAINER")
-  version = getEnv("VERSION")
-  arch = getEnv("ARCH")
+  controlFile = params.debianDir/"control"
+  rulesFile = params.debianDir/"rules"
+  changelog = params.debianDir/"changelog"
+
+  package = params.package
+  maintainer = params.maintainer
+  version = params.version
+  arch = params.arch
 
 fixFile(controlFile, package=package, maintainer=maintainer, version=version, arch=arch)
 fixFile(rulesFile, package=package, maintainer=maintainer, version=version, arch=arch)
