@@ -9,8 +9,6 @@ export VERSION="$INPUT_VERSION"
 export ARCH="$INPUT_ARCH"
 /replacetool
 
-/git2chlog deb -o /template/debian/changelog
-
 WORKDIR="/tmp/work"
 PACKAGE_DIR="$WORKDIR/$PACKAGE"
 
@@ -19,6 +17,7 @@ cp -r /template "$PACKAGE_DIR"
 cp -p "$PACKAGE" "$PACKAGE_DIR"
 (
   cd "$PACKAGE_DIR"
+  /git2chlog deb -o debian/changelog
   debian/rules build
   yes | debuild -us -uc
 )
