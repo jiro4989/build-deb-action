@@ -9,6 +9,8 @@ export VERSION="$INPUT_VERSION"
 export ARCH="$INPUT_ARCH"
 /replacetool
 
+/git2chlog -o /template/debian/changelog
+
 WORKDIR="/tmp/work"
 PACKAGE_DIR="$WORKDIR/$PACKAGE"
 
