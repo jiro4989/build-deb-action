@@ -17,6 +17,7 @@ cp -r /template "$PACKAGE_DIR"
 cp -p "$PACKAGE" "$PACKAGE_DIR"
 (
   cd "$PACKAGE_DIR"
+  /git2chlog deb -o debian/changelog
   debian/rules build
   yes | debuild -us -uc
 )
