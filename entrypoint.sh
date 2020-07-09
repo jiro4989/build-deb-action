@@ -2,19 +2,19 @@
 
 set -eux
 
-export DEBIAN_DIR="/template/debian"
-export PACKAGE="$INPUT_PACKAGE"
-export MAINTAINER="$INPUT_MAINTAINER"
-export VERSION="$INPUT_VERSION"
-export ARCH="$INPUT_ARCH"
-/replacetool
+/replacetool \
+  --debian-dir:/template/debian \
+  --package:"$INPUT_PACKAGE" \
+  --maintainer:"$INPUT_MAINTAINER" \
+  --version:"$INPUT_VERSION" \
+  --arch:"$INPUT_ARCH"
 
 WORKDIR="/tmp/work"
-PACKAGE_DIR="$WORKDIR/$PACKAGE"
+PACKAGE_DIR="$WORKDIR/$INPUT_PACKAGE"
 
 mkdir -p /tmp/work/
 cp -r /template "$PACKAGE_DIR"
-cp -p "$PACKAGE" "$PACKAGE_DIR"
+cp -p "$INPUT_PACKAGE" "$PACKAGE_DIR"
 (
   cd "$PACKAGE_DIR"
   /git2chlog deb -o debian/changelog
