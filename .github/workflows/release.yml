@@ -50,6 +50,27 @@ jobs:
           draft: false
           prerelease: false
 
+      - name: create dummy file
+        run: |
+          echo -e "echo hello" > testbin
+          chmod +x testbin
+        if: "steps.tag.outputs.value != ''"
+      - name: create deb file
+        uses: ./
+        if: "steps.tag.outputs.value != ''"
+        with:
+          package: testbin
+          maintainer: jiro4989
+          version: 'v1.0.0'
+          arch: 'x86_64'
+      - name: release
+        if: "steps.tag.outputs.value != ''"
+        uses: softprops/action-gh-release@v1
+        with:
+          files: '*.deb'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   release-check:
     if: github.event.action == 'labeled'
     runs-on: ubuntu-latest
