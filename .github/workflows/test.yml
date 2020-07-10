@@ -10,8 +10,11 @@ jobs:
       - uses: actions/checkout@v2
       - run: |
           mkdir -p .debpkg/usr/bin
+          mkdir -p .debpkg/usr/lib/testbin
           echo -e "echo hello" > .debpkg/usr/bin/testbin
-          chmod +x .debpkg/usr/bin/testbin
+          echo -e "echo hello2" > .debpkg/usr/bin/testbin2
+          echo -e "a=1" > .debpkg/usr/lib/testbin/testbin.conf
+          chmod +x .debpkg/usr/bin/*
       - uses: ./
         with:
           package: testbin
@@ -20,9 +23,16 @@ jobs:
           version: 'v1.0.0'
           arch: 'amd64'
           desc: 'test package'
-      - run: sudo dpkg -i *.deb
-      - run: which testbin
-      - run: testbin
+      - name: install deb package
+        run: sudo dpkg -i *.deb
+      - name: check files
+        run: |
+          which testbin
+          testbin
+          which testbin2
+          testbin2
+          find /usr/lib/testbin/
+          cat /usr/lib/testbin/testbin.conf
 
   test-nim-package:
     name: runner / build-deb-action (github-check)
