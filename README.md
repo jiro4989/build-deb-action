@@ -108,9 +108,3 @@ Supported linters:
 - [reviewdog/action-hadolint](https://github.com/reviewdog/action-hadolint)
 - [reviewdog/action-misspell](https://github.com/reviewdog/action-misspell)
 
-### Dependencies Update Automation
-This repository uses [haya14busa/action-depup](https://github.com/haya14busa/action-depup) to update
-reviewdog version.
-
-[![reviewdog depup demo](https://user-images.githubusercontent.com/3797062/73154254-170e7500-411a-11ea-8211-912e9de7c936.png)](https://github.com/reviewdog/action-template/pull/6)
-
