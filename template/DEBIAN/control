@@ -1,5 +1,5 @@
 Package: PACKAGE
-Version: 1.0.0-1
+Version: VERSION
 Architecture: ARCH
 Maintainer: MAINTAINER
-Description: DESC
+DESC
