@@ -2,8 +2,6 @@ name: test tag
 
 on:
   push:
-    branches:
-      - master
     tags:
       - 'v*.*.*'
 
