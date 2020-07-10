@@ -51,33 +51,6 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: create dummy file
-        run: |
-          echo -e "echo hello" > testbin
-          chmod +x testbin
-      - name: create deb file
-        uses: ./
-        with:
-          package: testbin
-          maintainer: jiro4989
-          version: ${{ github.ref }}
-          arch: 'x86_64'
-
-      - name: set release name
-        id: vars
-        run: echo ::set-output name=asset_name::${GITHUB_REF:11} # remove 'v'
-      - name: Upload Release Asset
-        if: "steps.tag.outputs.value != ''"
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: testbin_${{ steps.vars.outputs.asset_name }}_amd64.deb
-          asset_name: testbin_${{ steps.vars.outputs.asset_name }}_amd64.deb
-          asset_content_type: application/vnd.debian.binary-package
-
   release-check:
     if: github.event.action == 'labeled'
     runs-on: ubuntu-latest
