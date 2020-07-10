@@ -1,0 +1,26 @@
+name: test tag
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          echo -e "echo hello" > testbin
+          chmod +x testbin
+      - uses: ./
+        with:
+          package: testbin
+          maintainer: jiro4989
+          version: ${{ github.ref }}
+          arch: 'x86_64'
+      - run: sudo dpkg -i *.deb
+      - run: which testbin
+      - run: testbin
