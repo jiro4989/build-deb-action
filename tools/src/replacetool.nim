@@ -2,7 +2,7 @@ import os, strutils, parseopt
 
 type
   Options = object
-    debianDir, package, maintainer, version, arch: string
+    debianDir, package, maintainer, version, arch, desc: string
 
 proc getCmdOpts(params: seq[string]): Options =
   var optParser = initOptParser(params)
@@ -10,33 +10,40 @@ proc getCmdOpts(params: seq[string]): Options =
     case kind
     of cmdLongOption, cmdShortOption:
       case key
-      of "debian-dir", "d":
+      of "debian-dir":
         result.debianDir = val
-      of "package", "p":
+      of "package":
         result.package = val
-      of "maintainer", "m":
+      of "maintainer":
         result.maintainer = val
-      of "version", "v":
+      of "version":
         result.version = val
-      of "arch", "a":
+      of "arch":
         result.arch = val
+      of "description":
+        result.desc = val
     of cmdEnd:
       assert false # cannot happen
     else:
       assert false
 
-proc fix(body, package, maintainer, version, arch: string): string =
+proc replaceTemplate(body, package, maintainer, version, arch, desc: string): string =
   result =
     body
       .replace("PACKAGE", package)
       .replace("MAINTAINER", maintainer)
       .replace("VERSION", version)
       .replace("ARCH", arch)
+      .replace("DESC", desc)
 
-proc fixFile(file, package, maintainer, version, arch: string) =
+proc formatDescription(desc: string): string =
+  "Description: " & desc
+
+proc fixFile(file, package, maintainer, version, arch, desc: string) =
   let
     body = readFile(file)
-    fixedBody = fix(body, package=package, maintainer=maintainer, version=version, arch=arch)
+    fixedBody = replaceTemplate(body, package=package, maintainer=maintainer,
+                                version=version, arch=arch, desc=desc)
   writeFile(file, fixedBody)
 
 let
@@ -44,14 +51,11 @@ let
   params = getCmdOpts(args)
 
   controlFile = params.debianDir/"control"
-  rulesFile = params.debianDir/"rules"
-  changelog = params.debianDir/"changelog"
 
   package = params.package
   maintainer = params.maintainer
   version = params.version.strip(trailing = false, chars = {'v'})
   arch = params.arch
+  desc = params.desc.formatDescription
 
-fixFile(controlFile, package=package, maintainer=maintainer, version=version, arch=arch)
-fixFile(rulesFile, package=package, maintainer=maintainer, version=version, arch=arch)
-fixFile(changelog, package=package, maintainer=maintainer, version=version, arch=arch)
+fixFile(controlFile, package=package, maintainer=maintainer, version=version, arch=arch, desc=desc)

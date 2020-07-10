@@ -1,8 +1,0 @@
-Source: PACKAGE
-Maintainer: MAINTAINER
-Build-Depends: cdbs, debhelper
-Standards-Version: VERSION
-
-Package: PACKAGE
-Architecture: any
-Description: DESC
