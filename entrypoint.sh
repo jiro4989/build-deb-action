@@ -28,6 +28,4 @@ readonly FIXED_VERSION
 readonly DEB_FILE="${INPUT_PACKAGE}_${FIXED_VERSION}_${INPUT_ARCH}.deb"
 dpkg-deb -b "$PACKAGE_DIR" "$DEB_FILE"
 
-cp -p "$WORKDIR/"*.deb .
-
 ls ./*.deb
