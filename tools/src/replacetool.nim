@@ -49,7 +49,7 @@ let
 
   package = params.package
   maintainer = params.maintainer
-  version = params.version
+  version = params.version.strip(trailing = false, chars = {'v'})
   arch = params.arch
 
 fixFile(controlFile, package=package, maintainer=maintainer, version=version, arch=arch)
