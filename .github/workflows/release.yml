@@ -39,13 +39,14 @@ jobs:
 
       # Create release.
       - uses: actions/create-release@v1
+        id: create_release
         if: "steps.tag.outputs.value != ''"
         env:
           # This token is provided by Actions, you do not need to create your own token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.tag.outputs.value }}
-          release_name: Release ${{ steps.tag.outputs.value }}
+          release_name: ${{ steps.tag.outputs.value }}
           body: ${{ steps.bumpr.outputs.message }}
           draft: false
           prerelease: false
@@ -54,22 +55,34 @@ jobs:
         run: |
           echo -e "echo hello" > testbin
           chmod +x testbin
-        if: "steps.tag.outputs.value != ''"
       - name: create deb file
         uses: ./
-        if: "steps.tag.outputs.value != ''"
         with:
           package: testbin
           maintainer: jiro4989
-          version: 'v1.0.0'
+          version: ${{ github.ref }}
           arch: 'x86_64'
       - name: release
-        if: "steps.tag.outputs.value != ''"
         uses: softprops/action-gh-release@v1
         with:
           files: '*.deb'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: set release name
+        id: vars
+        run: echo ::set-output name=asset_name::${GITHUB_REF:11} # remove 'v'
+      - name: Upload Release Asset
+        if: "steps.tag.outputs.value != ''"
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: testbin_${{ steps.vars.outputs.asset_name }}_amd64.deb
+          asset_name: testbin_${{ steps.vars.outputs.asset_name }}_amd64.deb
+          asset_content_type: application/vnd.debian.binary-package
 
   release-check:
     if: github.event.action == 'labeled'
