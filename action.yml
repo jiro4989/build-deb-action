@@ -1,4 +1,4 @@
-name: 'Build debian package'
+name: 'Debian packaging'
 description: 'Build debian package.'
 author: 'jiro4989'
 inputs:
