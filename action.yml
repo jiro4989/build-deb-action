@@ -15,7 +15,11 @@ inputs:
     description: |
       Filtering mode for the reviewdog command [added,diff_context,file,nofilter].
       Default is added.
-    default: 'x86_64'
+    default: 'any'
+  desc:
+    description: |
+      description
+    default: ''
 runs:
   using: 'docker'
   image: 'Dockerfile'
