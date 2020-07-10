@@ -21,7 +21,7 @@ mkdir -p "$INSTALL_DIR"
 install -m 0755 "$INPUT_PACKAGE" "$INSTALL_DIR"
 
 # remove prefix 'v'
-FIXED_VERSION="$(echo "$INPUT_VERSION" | sed -E 's/^/v/')"
+FIXED_VERSION="$(echo "$INPUT_VERSION" | sed -E 's/^v//')"
 readonly FIXED_VERSION
 
 # create deb file
