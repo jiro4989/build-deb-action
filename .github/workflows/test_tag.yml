@@ -18,6 +18,8 @@ jobs:
         id: vars
         run: echo ::set-output name=tag::${GITHUB_REF:10}
 
+      - run: echo ${{ steps.vars.outputs.tag }}
+
       - uses: ./
         with:
           package: testbin
