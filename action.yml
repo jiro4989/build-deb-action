@@ -5,7 +5,7 @@ inputs:
   package:
     description: 'Working directory relative to the root directory.'
     required: true
-  package_root_dir:
+  package_root:
     description: 'Working directory relative to the root directory.'
     required: true
   maintainer:

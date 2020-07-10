@@ -10,7 +10,7 @@ set -eux
   --maintainer:"$INPUT_MAINTAINER" \
   --description:"$INPUT_DESC"
 
-cp -r /template/DEBIAN "$INPUT_PACKAGE_ROOT_DIR/"
+cp -r /template/DEBIAN "$INPUT_PACKAGE_ROOT/"
 
 # remove prefix 'v'
 FIXED_VERSION="$(echo "$INPUT_VERSION" | sed -E 's/^v//')"
@@ -18,6 +18,6 @@ readonly FIXED_VERSION
 
 # create deb file
 readonly DEB_FILE="${INPUT_PACKAGE}_${FIXED_VERSION}_${INPUT_ARCH}.deb"
-dpkg-deb -b "$INPUT_PACKAGE_ROOT_DIR" "$DEB_FILE"
+dpkg-deb -b "$INPUT_PACKAGE_ROOT" "$DEB_FILE"
 
 ls ./*.deb
