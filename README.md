@@ -1,4 +1,4 @@
-# action-template
+# build-deb-action
 
 <!-- TODO: replace jiro4989/build-deb-action with your repo name -->
 [![Test](https://github.com/jiro4989/build-deb-action/workflows/Test/badge.svg)](https://github.com/jiro4989/build-deb-action/actions?query=workflow%3ATest)
@@ -7,7 +7,7 @@
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/jiro4989/build-deb-action?logo=github&sort=semver)](https://github.com/jiro4989/build-deb-action/releases)
 [![action-bumpr supported](https://img.shields.io/badge/bumpr-supported-ff69b4?logo=github&link=https://github.com/haya14busa/action-bumpr)](https://github.com/haya14busa/action-bumpr)
 
-This action builds a simple debian package.
+`build-deb-action` builds a simple debian package.
 
 ## Input
 
