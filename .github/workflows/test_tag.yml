@@ -11,8 +11,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          echo -e "echo hello" > testbin
-          chmod +x testbin
+          mkdir -p .debpkg/usr/bin
+          echo -e "echo hello" > .debpkg/usr/bin/testbin
+          chmod +x .debpkg/usr/bin/testbin
 
       - name: Set output
         id: vars
@@ -23,6 +24,7 @@ jobs:
       - uses: ./
         with:
           package: testbin
+          package_root: .debpkg
           maintainer: jiro4989
           version: ${{ steps.vars.outputs.tag }}
           arch: 'amd64'

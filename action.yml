@@ -4,13 +4,16 @@ author: 'jiro4989'
 inputs:
   package:
     description: 'Working directory relative to the root directory.'
-    default: '.'
+    required: true
+  package_root:
+    description: 'Working directory relative to the root directory.'
+    required: true
   maintainer:
     description: 'Report level for reviewdog [info,warning,error]'
-    default: 'error'
+    required: true
   version:
     description: 'Reporter of reviewdog command [github-pr-check,github-pr-review].'
-    default: 'github-pr-check'
+    required: true
   arch:
     description: |
       Filtering mode for the reviewdog command [added,diff_context,file,nofilter].

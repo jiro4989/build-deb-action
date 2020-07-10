@@ -10,15 +10,7 @@ set -eux
   --maintainer:"$INPUT_MAINTAINER" \
   --description:"$INPUT_DESC"
 
-readonly WORKDIR="/tmp/work"
-readonly PACKAGE_DIR="$WORKDIR/$INPUT_PACKAGE"
-
-mkdir -p /tmp/work/
-cp -r /template "$PACKAGE_DIR"
-
-readonly INSTALL_DIR="$PACKAGE_DIR/usr/bin/"
-mkdir -p "$INSTALL_DIR"
-install -m 0755 "$INPUT_PACKAGE" "$INSTALL_DIR"
+cp -r /template/DEBIAN "$INPUT_PACKAGE_ROOT/"
 
 # remove prefix 'v'
 FIXED_VERSION="$(echo "$INPUT_VERSION" | sed -E 's/^v//')"
@@ -26,6 +18,6 @@ readonly FIXED_VERSION
 
 # create deb file
 readonly DEB_FILE="${INPUT_PACKAGE}_${FIXED_VERSION}_${INPUT_ARCH}.deb"
-dpkg-deb -b "$PACKAGE_DIR" "$DEB_FILE"
+dpkg-deb -b "$INPUT_PACKAGE_ROOT" "$DEB_FILE"
 
 ls ./*.deb

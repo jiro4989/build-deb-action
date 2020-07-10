@@ -9,11 +9,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          echo -e "echo hello" > testbin
-          chmod +x testbin
+          mkdir -p .debpkg/usr/bin
+          echo -e "echo hello" > .debpkg/usr/bin/testbin
+          chmod +x .debpkg/usr/bin/testbin
       - uses: ./
         with:
           package: testbin
+          package_root: .debpkg
           maintainer: jiro4989
           version: 'v1.0.0'
           arch: 'amd64'
@@ -35,9 +37,13 @@ jobs:
           cp bin/nimjson ../
           rm -rf app
           popd
+
+          mkdir -p .debpkg/usr/bin
+          mv nimjson .debpkg/usr/bin/
       - uses: ./
         with:
           package: nimjson
+          package_root: .debpkg
           maintainer: jiro4989
           version: 'v1.0.0'
           arch: 'amd64'
