@@ -25,7 +25,8 @@ jobs:
           package: testbin
           maintainer: jiro4989
           version: ${{ steps.vars.outputs.tag }}
-          arch: 'x86_64'
+          arch: 'any'
+          desc: 'test package'
       - run: sudo dpkg -i *.deb
       - run: which testbin
       - run: testbin
