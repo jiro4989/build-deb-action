@@ -36,7 +36,7 @@ inputs:
 ## Usage
 
 ```yaml
-name: reviewdog
+name: build
 
 on:
   push:
