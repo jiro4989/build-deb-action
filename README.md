@@ -23,43 +23,29 @@ This repo contains a sample action to run [misspell](https://github.com/client9/
 
 ## Input
 
-<!-- TODO: update -->
 ```yaml
 inputs:
-  github_token:
-    description: 'GITHUB_TOKEN'
-    default: '${{ github.token }}'
-  workdir:
-    description: 'Working directory relative to the root directory.'
-    default: '.'
-  ### Flags for reviewdog ###
-  level:
-    description: 'Report level for reviewdog [info,warning,error]'
-    default: 'error'
-  reporter:
-    description: 'Reporter of reviewdog command [github-pr-check,github-check,github-pr-review].'
-    default: 'github-pr-check'
-  filter_mode:
-    description: |
-      Filtering mode for the reviewdog command [added,diff_context,file,nofilter].
-      Default is added.
-    default: 'added'
-  fail_on_error:
-    description: |
-      Exit code for reviewdog when errors are found [true,false]
-      Default is `false`.
-    default: 'false'
-  reviewdog_flags:
-    description: 'Additional reviewdog flags'
-    default: ''
-  ### Flags for <linter-name> ###
-  locale:
-    description: '-locale flag of misspell. (US/UK)'
+  package:
+    description: 'Package name of debian package.'
+    required: true
+  package_root:
+    description: 'Directory of release files.'
+    required: true
+  maintainer:
+    description: 'Package maintainer name.'
+    required: true
+  version:
+    description: 'Package version.'
+    required: true
+  arch:
+    description: 'Package architecture.'
+    default: 'amd64'
+  desc:
+    description: 'Package description.'
     default: ''
 ```
 
 ## Usage
-<!-- TODO: update. replace `template` with the linter name -->
 
 ```yaml
 name: reviewdog
