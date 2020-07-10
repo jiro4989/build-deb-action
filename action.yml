@@ -1,27 +1,24 @@
-name: 'TODO: Run <linter-name> with reviewdog'
-description: 'TODO: 🐶 Run <linter-name> with reviewdog on pull requests to improve code review experience.'
+name: 'Build debian package'
+description: 'Build debian package.'
 author: 'jiro4989'
 inputs:
   package:
-    description: 'Working directory relative to the root directory.'
+    description: 'Package name of debian package.'
     required: true
   package_root:
-    description: 'Working directory relative to the root directory.'
+    description: 'Directory of release files.'
     required: true
   maintainer:
-    description: 'Report level for reviewdog [info,warning,error]'
+    description: 'Package maintainer name.'
     required: true
   version:
-    description: 'Reporter of reviewdog command [github-pr-check,github-pr-review].'
+    description: 'Package version.'
     required: true
   arch:
-    description: |
-      Filtering mode for the reviewdog command [added,diff_context,file,nofilter].
-      Default is added.
+    description: 'Package architecture.'
     default: 'amd64'
   desc:
-    description: |
-      description
+    description: 'Package description.'
     default: ''
 runs:
   using: 'docker'
