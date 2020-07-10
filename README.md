@@ -63,22 +63,37 @@ inputs:
 
 ```yaml
 name: reviewdog
-on: [pull_request]
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
 jobs:
-  # TODO: change `linter_name`.
-  linter_name:
-    name: runner / <linter-name>
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: reviewdog/action-template@v1
+
+      - name: Set tag
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF:10}
+
+      - name: create sample script
+        run: |
+          mkdir -p .debpkg/usr/bin
+          mkdir -p .debpkg/usr/lib/samplescript
+          echo -e "echo sample" > .debpkg/usr/bin/samplescript
+          chmod +x .debpkg/usr/bin/samplescript
+          echo -e "a=1" > .debpkg/usr/lib/samplescript/samplescript.conf
+      - uses: jiro4989/build-deb-action@v2
         with:
-          github_token: ${{ secrets.github_token }}
-          # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
-          reporter: github-pr-review
-          # Change reporter level if you need.
-          # GitHub Status Check won't become failure with warning.
-          level: warning
+          package: samplescript
+          package_root: .debpkg
+          maintainer: your_name
+          version: ${{ steps.vars.outputs.tag }} # vX.X.X
+          arch: 'amd64'
+          desc: 'this is sample package.'
 ```
 
 ## Development
