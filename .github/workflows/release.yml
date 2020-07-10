@@ -62,12 +62,6 @@ jobs:
           maintainer: jiro4989
           version: ${{ github.ref }}
           arch: 'x86_64'
-      - name: release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: '*.deb'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: set release name
         id: vars
