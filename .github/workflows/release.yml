@@ -37,6 +37,20 @@ jobs:
           if_true: ${{ github.ref }}
           if_false: ${{ steps.bumpr.outputs.next_version }}
 
+      # Create release.
+      - uses: actions/create-release@v1
+        id: create_release
+        if: "steps.tag.outputs.value != ''"
+        env:
+          # This token is provided by Actions, you do not need to create your own token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tag.outputs.value }}
+          release_name: ${{ steps.tag.outputs.value }}
+          body: ${{ steps.bumpr.outputs.message }}
+          draft: false
+          prerelease: false
+
       - name: create dummy file
         run: |
           echo -e "echo hello" > testbin
