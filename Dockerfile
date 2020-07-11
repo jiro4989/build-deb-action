@@ -17,9 +17,7 @@ RUN sh init.sh -y \
 COPY tools /tools
 RUN cd /tools && \
     nimble build -Y && \
-    cp -p bin/* / && \
-    nimble install -Y https://github.com/jiro4989/git2chlog && \
-    cp -p ~/.nimble/bin/git2chlog /
+    cp -p bin/* /
 
 COPY template /template
 COPY entrypoint.sh /usr/local/bin/
