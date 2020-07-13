@@ -70,6 +70,10 @@ jobs:
           desc: 'this is sample package.'
 ```
 
+## Example projects
+
+* https://github.com/jiro4989/nimjson
+
 ## Development
 
 ### Release
