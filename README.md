@@ -9,6 +9,8 @@
 
 `build-deb-action` builds a simple debian package.
 
+See [build-rpm-action](https://github.com/jiro4989/build-rpm-action) if you want to create `rpm` package.
+
 ## Input
 
 ```yaml
