@@ -51,10 +51,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set tag
-        id: vars
-        run: echo ::set-output name=tag::${GITHUB_REF:10}
-
       - name: create sample script
         run: |
           mkdir -p .debpkg/usr/bin
@@ -67,7 +63,7 @@ jobs:
           package: samplescript
           package_root: .debpkg
           maintainer: your_name
-          version: ${{ steps.vars.outputs.tag }} # vX.X.X
+          version: ${{ github.ref }} # refs/tags/v*.*.*
           arch: 'amd64'
           desc: 'this is sample package.'
 ```
