@@ -100,7 +100,8 @@ jobs:
           echo -e "echo hello" > .debpkg/usr/bin/testbin
           echo -e "echo hello2" > .debpkg/usr/bin/testbin2
           echo -e "a=1" > .debpkg/usr/lib/testbin/testbin.conf
-          cat << E > .debpkg/postinst
+          mkdir .debpkg/DEBIAN
+          cat << E > .debpkg/DEBIAN/postinst
           #!/bin/bash
           set -eu
           echo postinst $@
