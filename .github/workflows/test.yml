@@ -100,13 +100,16 @@ jobs:
           echo -e "echo hello" > .debpkg/usr/bin/testbin
           echo -e "echo hello2" > .debpkg/usr/bin/testbin2
           echo -e "a=1" > .debpkg/usr/lib/testbin/testbin.conf
-          mkdir .debpkg/DEBIAN
+
+          mkdir -p .debpkg/DEBIAN
           cat << E > .debpkg/DEBIAN/postinst
           #!/bin/bash
           set -eu
           echo postinst $@
           E
-          chmod +x .debpkg/usr/bin/* .debpkg/postinst
+          chmod +x .debpkg/DEBIAN/postinst
+
+          chmod +x .debpkg/usr/bin/* 
       - uses: ./
         with:
           package: testbin
