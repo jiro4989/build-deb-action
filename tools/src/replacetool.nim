@@ -29,24 +29,27 @@ proc getCmdOpts(params: seq[string]): Options =
     else:
       assert false
 
-proc replaceTemplate(body, package, maintainer, version, depends, arch, desc: string): string =
+proc replaceTemplate(body, package, maintainer, version, arch, depends, desc: string): string =
   result =
     body
       .replace("PACKAGE", package)
       .replace("MAINTAINER", maintainer)
       .replace("VERSION", version)
-      .replace("DEPENDS", depends)
       .replace("ARCH", arch)
+      .replace("DEPENDS", depends)
       .replace("DESC", desc)
 
 proc formatDescription(desc: string): string =
   "Description: " & desc
 
-proc fixFile(file, package, maintainer, version, depends, arch, desc: string) =
+proc formatDepends(depends: string): string =
+  if depends != "none": "Depends: " & depends else: ""
+
+proc fixFile(file, package, maintainer, version, arch, depends, desc: string) =
   let
     body = readFile(file)
     fixedBody = replaceTemplate(body, package=package, maintainer=maintainer,
-                                version=version, depends=depends, arch=arch, desc=desc)
+                                version=version, arch=arch, depends=depends, desc=desc)
   writeFile(file, fixedBody)
 
 let
@@ -58,9 +61,9 @@ let
   package = params.package
   maintainer = params.maintainer
   version = params.version.strip(trailing = false, chars = {'v'})
-  depends = params.depends
   arch = params.arch
+  depends = params.depends.formatDepends
   desc = params.desc.formatDescription
 
 fixFile(controlFile, package=package, maintainer=maintainer, version=version,
-        depends=depends, arch=arch, desc=desc)
+        arch=arch, depends=depends, desc=desc)

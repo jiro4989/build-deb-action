@@ -16,7 +16,7 @@ inputs:
     required: true
   depends:
     description: 'Package dependencies.'
-    default: ''
+    default: 'none'
     required: false
   arch:
     description: 'Package architecture.'
