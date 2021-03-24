@@ -8,6 +8,7 @@ INPUT_VERSION="$(echo "$INPUT_VERSION" | sed -E "s,^refs/tags/,,")"
   --debian-dir:/template/DEBIAN \
   --package:"$INPUT_PACKAGE" \
   --version:"$INPUT_VERSION" \
+  --depends:"$INPUT_DEPENDS" \
   --arch:"$INPUT_ARCH" \
   --maintainer:"$INPUT_MAINTAINER" \
   --description:"$INPUT_DESC"

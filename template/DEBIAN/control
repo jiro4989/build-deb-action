@@ -2,4 +2,5 @@ Package: PACKAGE
 Version: VERSION
 Architecture: ARCH
 Maintainer: MAINTAINER
+Depends: DEPENDS
 DESC

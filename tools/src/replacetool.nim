@@ -2,7 +2,7 @@ import os, strutils, parseopt
 
 type
   Options = object
-    debianDir, package, maintainer, version, arch, desc: string
+    debianDir, package, maintainer, version, depends, arch, desc: string
 
 proc getCmdOpts(params: seq[string]): Options =
   var optParser = initOptParser(params)
@@ -18,6 +18,8 @@ proc getCmdOpts(params: seq[string]): Options =
         result.maintainer = val
       of "version":
         result.version = val
+      of "depends":
+        result.depends = val
       of "arch":
         result.arch = val
       of "description":
@@ -27,23 +29,24 @@ proc getCmdOpts(params: seq[string]): Options =
     else:
       assert false
 
-proc replaceTemplate(body, package, maintainer, version, arch, desc: string): string =
+proc replaceTemplate(body, package, maintainer, version, depends, arch, desc: string): string =
   result =
     body
       .replace("PACKAGE", package)
       .replace("MAINTAINER", maintainer)
       .replace("VERSION", version)
+      .replace("DEPENDS", depends)
       .replace("ARCH", arch)
       .replace("DESC", desc)
 
 proc formatDescription(desc: string): string =
   "Description: " & desc
 
-proc fixFile(file, package, maintainer, version, arch, desc: string) =
+proc fixFile(file, package, maintainer, version, depends, arch, desc: string) =
   let
     body = readFile(file)
     fixedBody = replaceTemplate(body, package=package, maintainer=maintainer,
-                                version=version, arch=arch, desc=desc)
+                                version=version, depends=depends, arch=arch, desc=desc)
   writeFile(file, fixedBody)
 
 let
@@ -55,7 +58,9 @@ let
   package = params.package
   maintainer = params.maintainer
   version = params.version.strip(trailing = false, chars = {'v'})
+  depends = params.depends
   arch = params.arch
   desc = params.desc.formatDescription
 
-fixFile(controlFile, package=package, maintainer=maintainer, version=version, arch=arch, desc=desc)
+fixFile(controlFile, package=package, maintainer=maintainer, version=version,
+        depends=depends, arch=arch, desc=desc)
