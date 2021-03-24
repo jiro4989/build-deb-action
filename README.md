@@ -27,12 +27,18 @@ inputs:
   version:
     description: 'Package version.'
     required: true
+  depends:
+    description: 'Package dependencies.'
+    default: 'none'
+    required: false
   arch:
     description: 'Package architecture.'
     default: 'amd64'
+    required: false
   desc:
     description: 'Package description.'
     default: ''
+    required: false
 ```
 
 ## Usage
@@ -65,6 +71,7 @@ jobs:
           maintainer: your_name
           version: ${{ github.ref }} # refs/tags/v*.*.*
           arch: 'amd64'
+          depends: 'libc6 (>= 2.2.1), git'
           desc: 'this is sample package.'
 ```
 
