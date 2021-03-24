@@ -70,11 +70,12 @@ jobs:
       - uses: jiro4989/setup-nim-action@v1
       - run: |
           git clone https://github.com/jiro4989/nimjson app
-          pushd app
-          nimble build -Y
-          cp bin/nimjson ../
+          (
+            cd app
+            nimble build -Y
+            cp bin/nimjson ../
+          )
           rm -rf app
-          popd
 
           mkdir -p .debpkg/usr/bin
           mv nimjson .debpkg/usr/bin/
