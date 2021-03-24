@@ -32,18 +32,18 @@ proc getCmdOpts(params: seq[string]): Options =
 proc replaceTemplate(body, package, maintainer, version, arch, depends, desc: string): string =
   result =
     body
-      .replace("PACKAGE", package)
-      .replace("MAINTAINER", maintainer)
-      .replace("VERSION", version)
-      .replace("ARCH", arch)
-      .replace("DEPENDS", depends)
-      .replace("DESC", desc)
+      .replace("{PACKAGE}", package)
+      .replace("{MAINTAINER}", maintainer)
+      .replace("{VERSION}", version)
+      .replace("{ARCH}", arch)
+      .replace("{DEPENDS}", depends)
+      .replace("{DESC}", desc)
 
 proc formatDescription(desc: string): string =
   "Description: " & desc
 
 proc formatDepends(depends: string): string =
-  if depends != "none": "Depends: " & depends else: ""
+  if depends != "none": "Depends: " & depends & "\n" else: ""
 
 proc fixFile(file, package, maintainer, version, arch, depends, desc: string) =
   let

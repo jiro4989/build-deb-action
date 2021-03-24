@@ -149,7 +149,7 @@ jobs:
           package_root: .debpkg
           maintainer: jiro4989
           version: 'v1.0.0'
-          depends: 'libc6: (>= 2.2.1)'
+          depends: 'libc6 (>= 2.2.1), git'
           arch: 'amd64'
           desc: 'test package'
       - run: sudo dpkg -i *.deb
