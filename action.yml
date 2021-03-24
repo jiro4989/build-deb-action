@@ -14,12 +14,18 @@ inputs:
   version:
     description: 'Package version.'
     required: true
+  depends:
+    description: 'Package dependencies.'
+    default: 'none'
+    required: false
   arch:
     description: 'Package architecture.'
     default: 'amd64'
+    required: false
   desc:
     description: 'Package description.'
     default: ''
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'

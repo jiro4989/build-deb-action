@@ -70,11 +70,12 @@ jobs:
       - uses: jiro4989/setup-nim-action@v1
       - run: |
           git clone https://github.com/jiro4989/nimjson app
-          pushd app
-          nimble build -Y
-          cp bin/nimjson ../
+          (
+            cd app
+            nimble build -Y
+            cp bin/nimjson ../
+          )
           rm -rf app
-          popd
 
           mkdir -p .debpkg/usr/bin
           mv nimjson .debpkg/usr/bin/
@@ -89,6 +90,7 @@ jobs:
       - run: sudo dpkg -i *.deb
       - run: which nimjson
       - run: nimjson -h
+      - run: dpkg -s nimjson
 
   test-postinst:
     runs-on: ubuntu-latest
@@ -129,3 +131,32 @@ jobs:
           find /usr/lib/testbin/
           cat /usr/lib/testbin/testbin.conf
 
+  test-depends:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: jiro4989/setup-nim-action@v1
+      - run: |
+          git clone https://github.com/jiro4989/nimjson app
+          (
+            cd app
+            nimble build -Y
+            cp bin/nimjson ../
+          )
+          rm -rf app
+
+          mkdir -p .debpkg/usr/bin
+          mv nimjson .debpkg/usr/bin/
+      - uses: ./
+        with:
+          package: nimjson
+          package_root: .debpkg
+          maintainer: jiro4989
+          version: 'v1.0.0'
+          depends: 'libc6 (>= 2.2.1), git'
+          arch: 'amd64'
+          desc: 'test package'
+      - run: sudo dpkg -i *.deb
+      - run: which nimjson
+      - run: nimjson -h
+      - run: dpkg -s nimjson
