@@ -43,7 +43,11 @@ proc formatDescription(desc: string): string =
   "Description: " & desc
 
 proc formatDepends(depends: string): string =
-  if depends != "none": "Depends: " & depends & "\n" else: ""
+  result =
+    if depends != "none":
+      "Depends: " & depends & "\n"
+    else:
+      ""
 
 proc fixFile(file, package, maintainer, version, arch, depends, desc: string) =
   let
