@@ -1,7 +1,13 @@
 name: Test
 on:
   push:
+    paths-ignore:
+      - 'LICENSE'
+      - 'README.*'
   pull_request:
+    paths-ignore:
+      - 'LICENSE'
+      - 'README.*'
 jobs:
   test-script:
     runs-on: ubuntu-latest
