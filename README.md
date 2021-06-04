@@ -77,20 +77,36 @@ jobs:
 
 ## Example projects
 
-* https://github.com/jiro4989/nimjson
+* <https://github.com/jiro4989/nimjson>
 
 ## Development
+
+### Flow
+
+1. Create a new branch
+1. Commit
+1. Merge the branch into `develop` branch
+1. Push `develop` branch
+1. Check passing all tests
+1. Create a new pull request
+1. Merge the branch into `master` branch
+
+This actions is using a DockerHub image.  We must push `docker-v0.0.0` git-tag
+to create a new tagged docker image.  Published a new tagged docker image, and
+change tag of action.yml into `develop` branch, and check passing all tests,
+and merge into `master`.
 
 ### Release
 
 #### [haya14busa/action-bumpr](https://github.com/haya14busa/action-bumpr)
+
 You can bump version on merging Pull Requests with specific labels (bump:major,bump:minor,bump:patch).
 Pushing tag manually by yourself also work.
 
 #### [haya14busa/action-update-semver](https://github.com/haya14busa/action-update-semver)
 
 This action updates major/minor release tags on a tag push. e.g. Update v1 and v1.2 tag when released v1.2.3.
-ref: https://help.github.com/en/articles/about-actions#versioning-your-action
+ref: <https://help.github.com/en/articles/about-actions#versioning-your-action>
 
 ### Lint - reviewdog integration
 
@@ -101,7 +117,7 @@ which is useful for Docker container based actions.
 
 Supported linters:
 
-- [reviewdog/action-shellcheck](https://github.com/reviewdog/action-shellcheck)
-- [reviewdog/action-hadolint](https://github.com/reviewdog/action-hadolint)
-- [reviewdog/action-misspell](https://github.com/reviewdog/action-misspell)
+* [reviewdog/action-shellcheck](https://github.com/reviewdog/action-shellcheck)
+* [reviewdog/action-hadolint](https://github.com/reviewdog/action-hadolint)
+* [reviewdog/action-misspell](https://github.com/reviewdog/action-misspell)
 

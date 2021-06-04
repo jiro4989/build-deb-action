@@ -28,7 +28,7 @@ inputs:
     required: false
 runs:
   using: 'docker'
-  image: 'Dockerfile'
+  image: 'docker://jiro4989/build-deb-action:2.4.0'
 
 # Ref: https://haya14busa.github.io/github-action-brandings/
 # TODO: update branding if you want.
