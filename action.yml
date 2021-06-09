@@ -24,7 +24,7 @@ inputs:
     required: false
   desc:
     description: 'Package description.'
-    default: ''
+    default: 'no description'
     required: false
 runs:
   using: 'docker'
