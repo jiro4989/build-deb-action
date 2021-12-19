@@ -4,10 +4,16 @@ set -eux
 
 INPUT_VERSION="$(echo "$INPUT_VERSION" | sed -E "s,^refs/tags/,,")"
 
+if [ -z "$INPUT_SIZE" ]; then
+  PACKAGE_ROOT_SIZE_BYTES="$(du -bcs --exclude=DEBIAN $INPUT_PACKAGE_ROOT/ | grep -o -E '[0-9]+' | head -1 | sed -e 's/^0\+//')"
+  INPUT_SIZE="$(awk "BEGIN {print ($PACKAGE_ROOT_SIZE_BYTES/1024)+1}" | awk '{print int($0)}')"
+fi
+
 /replacetool \
   --debian-dir:/template/DEBIAN \
   --package:"$INPUT_PACKAGE" \
   --version:"$INPUT_VERSION" \
+  --size:"$INPUT_SIZE" \
   --depends:"$INPUT_DEPENDS" \
   --arch:"$INPUT_ARCH" \
   --maintainer:"$INPUT_MAINTAINER" \

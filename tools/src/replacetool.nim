@@ -2,7 +2,7 @@ import os, strutils, parseopt
 
 type
   Options = object
-    debianDir, package, maintainer, version, depends, arch, desc: string
+    debianDir, package, maintainer, version, size, depends, arch, desc: string
 
 proc getCmdOpts(params: seq[string]): Options =
   var optParser = initOptParser(params)
@@ -18,6 +18,8 @@ proc getCmdOpts(params: seq[string]): Options =
         result.maintainer = val
       of "version":
         result.version = val
+      of "size":
+        result.size = val
       of "depends":
         result.depends = val
       of "arch":
@@ -29,12 +31,13 @@ proc getCmdOpts(params: seq[string]): Options =
     else:
       assert false
 
-proc replaceTemplate(body, package, maintainer, version, arch, depends, desc: string): string =
+proc replaceTemplate(body, package, maintainer, version, size, arch, depends, desc: string): string =
   result =
     body
       .replace("{PACKAGE}", package)
       .replace("{MAINTAINER}", maintainer)
       .replace("{VERSION}", version)
+      .replace("{SIZE}", size)
       .replace("{ARCH}", arch)
       .replace("{DEPENDS}", depends)
       .replace("{DESC}", desc)
@@ -49,11 +52,11 @@ proc formatDepends(depends: string): string =
     else:
       ""
 
-proc fixFile(file, package, maintainer, version, arch, depends, desc: string) =
+proc fixFile(file, package, maintainer, version, size, arch, depends, desc: string) =
   let
     body = readFile(file)
     fixedBody = replaceTemplate(body, package=package, maintainer=maintainer,
-                                version=version, arch=arch, depends=depends, desc=desc)
+                                version=version, size=size, arch=arch, depends=depends, desc=desc)
   writeFile(file, fixedBody)
 
 let
@@ -65,9 +68,10 @@ let
   package = params.package
   maintainer = params.maintainer
   version = params.version.strip(trailing = false, chars = {'v'})
+  size = params.size
   arch = params.arch
   depends = params.depends.formatDepends
   desc = params.desc.formatDescription
 
 fixFile(controlFile, package=package, maintainer=maintainer, version=version,
-        arch=arch, depends=depends, desc=desc)
+        size=size, arch=arch, depends=depends, desc=desc)
