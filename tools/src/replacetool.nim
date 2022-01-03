@@ -31,7 +31,8 @@ proc getCmdOpts(params: seq[string]): Options =
     else:
       assert false
 
-proc replaceTemplate(body, package, maintainer, version, installedSize, arch, depends, desc: string): string =
+proc replaceTemplate(body, package, maintainer, version, installedSize, arch,
+    depends, desc: string): string =
   result =
     body
       .replace("{PACKAGE}", package)
@@ -52,11 +53,14 @@ proc formatDepends(depends: string): string =
     else:
       ""
 
-proc fixFile(file, package, maintainer, version, installedSize, arch, depends, desc: string) =
+proc fixFile(file, package, maintainer, version, installedSize, arch, depends,
+    desc: string) =
   let
     body = readFile(file)
-    fixedBody = replaceTemplate(body, package=package, maintainer=maintainer,
-                                version=version, installedSize=installedSize, arch=arch, depends=depends, desc=desc)
+    fixedBody = replaceTemplate(body, package = package, maintainer = maintainer,
+                                version = version,
+                                installedSize = installedSize, arch = arch,
+                                depends = depends, desc = desc)
   writeFile(file, fixedBody)
 
 let
@@ -73,5 +77,5 @@ let
   depends = params.depends.formatDepends
   desc = params.desc.formatDescription
 
-fixFile(controlFile, package=package, maintainer=maintainer, version=version,
-        installedSize=installedSize, arch=arch, depends=depends, desc=desc)
+fixFile(controlFile, package = package, maintainer = maintainer, version = version,
+        installedSize = installedSize, arch = arch, depends = depends, desc = desc)
