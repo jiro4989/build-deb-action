@@ -47,6 +47,8 @@ jobs:
 
       - name: install deb package
         run: sudo dpkg -i *.deb
+      - name: Print deb package information
+        run: dpkg -I ./*.deb
       - name: check files
         run: |
           which testbin
@@ -55,6 +57,11 @@ jobs:
           testbin2
           find /usr/lib/testbin/
           cat /usr/lib/testbin/testbin.conf
+      - name: Print installed deb package size
+        run: >
+          dpkg-query -W -f='${Installed-Size}\t${Package}\n' |
+          sort -nr |
+          grep testbin
 
   test-github-ref-version:
     runs-on: ubuntu-latest
@@ -179,7 +186,18 @@ jobs:
           depends: 'libc6 (>= 2.2.1), git'
           arch: 'amd64'
           desc: 'test package'
-      - run: sudo dpkg -i *.deb
-      - run: which nimjson
-      - run: nimjson -h
-      - run: dpkg -s nimjson
+      - name: Install deb package
+        run: sudo dpkg -i ./*.deb
+      - name: Print deb package information
+        run: dpkg -I ./*.deb
+      - name: Print installed command path
+        run: which nimjson
+      - name: Print command help message
+        run: nimjson -h
+      - name: Print installed deb package information
+        run: dpkg -s nimjson
+      - name: Print installed deb package size
+        run: >
+          dpkg-query -W -f='${Installed-Size}\t${Package}\n' |
+          sort -nr |
+          grep nimjson
