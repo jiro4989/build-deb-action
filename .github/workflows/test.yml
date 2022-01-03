@@ -35,7 +35,6 @@ jobs:
           arch: 'amd64'
           desc: "${{ matrix.desc }}"
         if: matrix.desc != ''
-        id: tmp
 
       - uses: ./
         with:
@@ -45,9 +44,6 @@ jobs:
           version: 'v1.0.0'
           arch: 'amd64'
         if: matrix.desc == ''
-
-      - run: echo "file_name = ${{ steps.tmp.outputs.file_name }}"
-        if: matrix.desc != ''
 
       - name: install deb package
         run: sudo dpkg -i *.deb
