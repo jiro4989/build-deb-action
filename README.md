@@ -27,8 +27,8 @@ inputs:
   version:
     description: 'Package version.'
     required: true
-  size:
-    description: 'Package installed size.'
+  installed_size:
+    description: 'Package installed size. GitHub Actions set summarized byte size of `package_root` directory when this parameter is empty.'
     default: ''
     required: false
   depends:
