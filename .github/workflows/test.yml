@@ -61,7 +61,7 @@ jobs:
         run: >
           dpkg-query -W -f='${Installed-Size}\t${Package}\n' |
           sort -nr |
-          grep nimjson
+          grep testbin
 
   test-github-ref-version:
     runs-on: ubuntu-latest
