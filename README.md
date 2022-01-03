@@ -41,6 +41,14 @@ inputs:
     required: false
 ```
 
+## Output
+
+```yaml
+outputs:
+  file_name:
+    description: 'File name of resulting .deb file.'
+```
+
 ## Usage
 
 ```yaml
