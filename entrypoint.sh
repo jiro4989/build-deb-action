@@ -6,7 +6,7 @@ INPUT_VERSION="$(echo "$INPUT_VERSION" | sed -E "s,^refs/tags/,,")"
 
 if [ -z "$INPUT_SIZE" ]; then
   PACKAGE_ROOT_SIZE_BYTES="$(du -bcs --exclude=DEBIAN "$INPUT_PACKAGE_ROOT"/ | awk '{print $1}' | head -1 | sed -e 's/^0\+//')"
-  INPUT_SIZE="$(awk "BEGIN {print ($PACKAGE_ROOT_SIZE_BYTES/1024)+1}" | awk '{print int($0)}')"
+  INPUT_SIZE="$(awk -v size="$PACKAGE_ROOT_SIZE_BYTES" 'BEGIN {print (size/1024)+1}' | awk '{print int($0)}')"
 fi
 
 /replacetool \
