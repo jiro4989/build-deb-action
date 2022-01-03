@@ -14,7 +14,7 @@ inputs:
   version:
     description: 'Package version.'
     required: true
-  size:
+  installed_size:
     description: 'Package installed size.'
     default: ''
     required: false
