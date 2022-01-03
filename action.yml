@@ -30,6 +30,9 @@ inputs:
     description: 'Package description.'
     default: 'no description'
     required: false
+outputs:
+  file_name:
+    description: 'File name of resulting .deb file.'
 runs:
   using: 'docker'
   image: 'docker://jiro4989/build-deb-action:2.4.0'

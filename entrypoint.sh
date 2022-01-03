@@ -30,3 +30,4 @@ readonly DEB_FILE="${INPUT_PACKAGE}_${FIXED_VERSION}_${INPUT_ARCH}.deb"
 dpkg-deb -b "$INPUT_PACKAGE_ROOT" "$DEB_FILE"
 
 ls ./*.deb
+echo "::set-output name=file_name::$DEB_FILE"
