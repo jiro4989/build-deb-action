@@ -82,6 +82,7 @@ jobs:
           version: 'refs/tags/v1.0.0'
           arch: 'amd64'
           desc: 'test package'
+        id: build
       - name: install deb package
         run: sudo dpkg -i *.deb
       - name: check files
@@ -92,6 +93,8 @@ jobs:
           testbin2
           find /usr/lib/testbin/
           cat /usr/lib/testbin/testbin.conf
+      - name: Test file_name
+        run: test ${{ steps.build.outputs.file_name }} = 'testbin_1.0.0_amd64.deb'
 
   test-nim-package:
     runs-on: ubuntu-latest
