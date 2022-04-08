@@ -1,6 +1,11 @@
+---
+
 name: Test
-on:
+
+"on":
   push:
+    branches:
+      - master
     paths-ignore:
       - 'LICENSE'
       - 'README.*'
