@@ -76,6 +76,11 @@ jobs:
           echo -e "echo sample" > .debpkg/usr/bin/samplescript
           chmod +x .debpkg/usr/bin/samplescript
           echo -e "a=1" > .debpkg/usr/lib/samplescript/samplescript.conf
+
+          # create DEBIAN directory if you want to add other pre/post scripts
+          mkdir -p .debpkg/DEBIAN
+          echo -e "echo postinst" > .debpkg/DEBIAN/postinst
+          chmod +x .debpkg/DEBIAN/postinst
       - uses: jiro4989/build-deb-action@v2
         with:
           package: samplescript
