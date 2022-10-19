@@ -35,7 +35,7 @@ outputs:
     description: 'File name of resulting .deb file.'
 runs:
   using: 'docker'
-  image: 'docker://jiro4989/build-deb-action:2.5.0'
+  image: 'docker://jiro4989/build-deb-action:2.5.2'
 
 # Ref: https://haya14busa.github.io/github-action-brandings/
 # TODO: update branding if you want.
