@@ -221,6 +221,7 @@ jobs:
         compress_type:
           - 'gzip'
           - 'xz'
+          - 'zstd'
     steps:
       - uses: actions/checkout@v3
       - run: |
