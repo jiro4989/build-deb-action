@@ -9,6 +9,16 @@ if [ -z "$INPUT_INSTALLED_SIZE" ]; then
   INPUT_INSTALLED_SIZE="$(awk -v size="$PACKAGE_ROOT_SIZE_BYTES" 'BEGIN {print (size/1024)+1}' | awk '{print int($0)}')"
 fi
 
+case "${INPUT_COMPRESS_TYPE}" in
+  gzip | xz | zstd)
+    # nothing to do
+    ;;
+  *)
+    echo "[ERR] unsupported compress type. input is '${INPUT_COMPRESS_TYPE}'"
+    exit 1
+    ;;
+esac
+
 /replacetool \
   --debian-dir:/template/DEBIAN \
   --package:"$INPUT_PACKAGE" \
@@ -27,7 +37,7 @@ readonly FIXED_VERSION
 
 # create deb file
 readonly DEB_FILE="${INPUT_PACKAGE}_${FIXED_VERSION}_${INPUT_ARCH}.deb"
-dpkg-deb -b "$INPUT_PACKAGE_ROOT" "$DEB_FILE"
+dpkg-deb -Z"${INPUT_COMPRESS_TYPE}" -b "$INPUT_PACKAGE_ROOT" "$DEB_FILE"
 
 ls ./*.deb
 echo "file_name=$DEB_FILE" >> "${GITHUB_OUTPUT}"
