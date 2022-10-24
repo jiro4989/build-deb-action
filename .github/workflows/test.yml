@@ -209,3 +209,36 @@ jobs:
           dpkg-query -W -f='${Installed-Size}\t${Package}\n' |
           sort -nr |
           grep nimjson
+
+  test-debian:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image:
+          - 'ubuntu:22.04'
+          - 'debian:9'
+          - 'debian:stable'
+        compress_type:
+          - 'gzip'
+          - 'xz'
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          mkdir -p .debpkg/usr/bin
+          mkdir -p .debpkg/usr/lib/testbin
+          echo -e "echo hello" > .debpkg/usr/bin/testbin
+          echo -e "echo hello2" > .debpkg/usr/bin/testbin2
+          echo -e "a=1" > .debpkg/usr/lib/testbin/testbin.conf
+          chmod +x .debpkg/usr/bin/*
+
+      - uses: ./
+        with:
+          package: testbin
+          package_root: .debpkg
+          maintainer: jiro4989
+          version: 'v1.0.0'
+          arch: 'amd64'
+          compress_type: ${{ matrix.compress_type }}
+
+      - name: Test installing on docker
+        run: docker run --rm -v $PWD:/work -w /work -t ${{ matrix.image }} dpkg -i ./*.deb
