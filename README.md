@@ -43,6 +43,13 @@ inputs:
     description: 'Package description.'
     default: ''
     required: false
+  compress_type:
+    description: >
+      Set the compression type used when building.
+      Allowed types gzip, xz, zstd, none.
+      Default is gzip.
+    default: 'gzip'
+    required: false
 ```
 
 ## Output
