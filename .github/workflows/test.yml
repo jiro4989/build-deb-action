@@ -37,6 +37,12 @@ jobs:
             sample package2
 
             sample package3
+          - |
+            sample package1
+
+            sample package2
+
+            sample package3
           - ''
     steps:
       - uses: actions/checkout@v3
