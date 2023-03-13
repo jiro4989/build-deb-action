@@ -32,6 +32,11 @@ jobs:
       matrix:
         desc:
           - 'test package'
+          - >
+            sample package1
+            sample package2
+
+            sample package3
           - ''
     steps:
       - uses: actions/checkout@v3
