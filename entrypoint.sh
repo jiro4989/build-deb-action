@@ -35,9 +35,14 @@ cp -r /template/DEBIAN "$INPUT_PACKAGE_ROOT/"
 FIXED_VERSION="$(echo "$INPUT_VERSION" | sed -E 's/^v//')"
 readonly FIXED_VERSION
 
+OWNER="--root-owner-group"
+if [ "${INPUT_KEEP_OWNERSHIP}" = "true" ]; then
+  OWNER=""
+fi
+
 # create deb file
 readonly DEB_FILE="${INPUT_PACKAGE}_${FIXED_VERSION}_${INPUT_ARCH}.deb"
-dpkg-deb -Z"${INPUT_COMPRESS_TYPE}" -b "$INPUT_PACKAGE_ROOT" "$DEB_FILE"
+dpkg-deb -Z"${INPUT_COMPRESS_TYPE}" ${OWNER:+"$OWNER"} --build "$INPUT_PACKAGE_ROOT" "$DEB_FILE"
 
 ls ./*.deb
 echo "file_name=$DEB_FILE" >> "${GITHUB_OUTPUT}"
