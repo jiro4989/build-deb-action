@@ -10,7 +10,7 @@ if [ -z "$INPUT_INSTALLED_SIZE" ]; then
 fi
 
 case "${INPUT_COMPRESS_TYPE}" in
-  gzip | xz | zstd)
+  gzip | xz | zstd | none)
     # nothing to do
     ;;
   *)
