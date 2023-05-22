@@ -5,8 +5,8 @@ set -eux
 INPUT_VERSION="$(echo "$INPUT_VERSION" | sed -E "s,^refs/tags/,,")"
 
 if [ -z "$INPUT_INSTALLED_SIZE" ]; then
-  PACKAGE_ROOT_SIZE_BYTES="$(du -bcs --exclude=DEBIAN "$INPUT_PACKAGE_ROOT"/ | awk '{print $1}' | head -1 | sed -e 's/^0\+//')"
-  INPUT_INSTALLED_SIZE="$(awk -v size="$PACKAGE_ROOT_SIZE_BYTES" 'BEGIN {print (size/1024)+1}' | awk '{print int($0)}')"
+  PACKAGE_ROOT_SIZE_BYTES="$(du --bytes --summarize --exclude=DEBIAN "$INPUT_PACKAGE_ROOT"/ | awk '{print $1}')"
+  INPUT_INSTALLED_SIZE="$(( (PACKAGE_ROOT_SIZE_BYTES + 1024 - 1) / 1024 ))"
 fi
 
 case "${INPUT_COMPRESS_TYPE}" in
