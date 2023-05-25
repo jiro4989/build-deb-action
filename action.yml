@@ -37,12 +37,18 @@ inputs:
       Default is gzip.
     default: 'gzip'
     required: false
+  keep_ownership:
+    description: >
+      If set to true, it creates the package keeping files' owner and group, otherwise they will be assigned to root
+      Default is false.
+    default: 'false'
+    required: false
 outputs:
   file_name:
     description: 'File name of resulting .deb file.'
 runs:
   using: 'docker'
-  image: 'docker://jiro4989/build-deb-action:2.8.1'
+  image: 'docker://jiro4989/build-deb-action:3.0.0'
 
 # Ref: https://haya14busa.github.io/github-action-brandings/
 # TODO: update branding if you want.

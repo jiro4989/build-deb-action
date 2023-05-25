@@ -50,6 +50,12 @@ inputs:
       Default is gzip.
     default: 'gzip'
     required: false
+  keep_ownership:
+    description: >
+      If set to true, it creates the package keeping files' owner and group, otherwise they will be assigned to root
+      Default is false.
+    default: 'false'
+    required: false
 ```
 
 ## Output
