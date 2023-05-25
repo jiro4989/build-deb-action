@@ -94,7 +94,7 @@ jobs:
           mkdir -p .debpkg/DEBIAN
           echo -e "echo postinst" > .debpkg/DEBIAN/postinst
           chmod +x .debpkg/DEBIAN/postinst
-      - uses: jiro4989/build-deb-action@v2
+      - uses: jiro4989/build-deb-action@v3
         with:
           package: samplescript
           package_root: .debpkg
@@ -108,6 +108,13 @@ jobs:
 ## Example projects
 
 * <https://github.com/jiro4989/nimjson>
+
+## Changes
+
+### v2 -> v3
+
+* PR #45 - Makes all files owned by root
+  * Changed default file owner to `root`. Use `keep_ownership: true` if you want to revert to `v2` behavior.
 
 ## Development
 
