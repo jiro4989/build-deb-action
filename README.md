@@ -94,7 +94,7 @@ jobs:
           mkdir -p .debpkg/DEBIAN
           echo -e "echo postinst" > .debpkg/DEBIAN/postinst
           chmod +x .debpkg/DEBIAN/postinst
-      - uses: jiro4989/build-deb-action@v2
+      - uses: jiro4989/build-deb-action@v3
         with:
           package: samplescript
           package_root: .debpkg
