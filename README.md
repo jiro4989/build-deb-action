@@ -109,6 +109,13 @@ jobs:
 
 * <https://github.com/jiro4989/nimjson>
 
+## Changes
+
+### v2 -> v3
+
+* PR #45 - Makes all files owned by root
+  * Changed default file owner to `root`. Use `keep_ownership: true` if you want to revert to `v2` behavior.
+
 ## Development
 
 ### Flow
