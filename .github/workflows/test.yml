@@ -1,12 +1,51 @@
+---
+
 name: Test
-on:
+
+"on":
   push:
+    branches:
+      - master
+    paths-ignore:
+      - 'LICENSE'
+      - 'README.*'
   pull_request:
+    paths-ignore:
+      - 'LICENSE'
+      - 'README.*'
 jobs:
-  test-script:
+  test-nim:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - uses: jiro4989/setup-nim-action@v1
+        with:
+          nim-version: stable
+      - run: |
+          cd tools
+          nimble build -Y
+          nimble test -Y
+
+  test-script:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        desc:
+          - 'test package'
+          - >
+            sample package1
+            sample package2
+
+            sample package3
+          - |
+            sample package1
+
+            sample package2
+
+            sample package3
+          - ''
+    steps:
+      - uses: actions/checkout@v3
       - run: |
           mkdir -p .debpkg/usr/bin
           mkdir -p .debpkg/usr/lib/testbin
@@ -14,6 +53,7 @@ jobs:
           echo -e "echo hello2" > .debpkg/usr/bin/testbin2
           echo -e "a=1" > .debpkg/usr/lib/testbin/testbin.conf
           chmod +x .debpkg/usr/bin/*
+
       - uses: ./
         with:
           package: testbin
@@ -21,9 +61,22 @@ jobs:
           maintainer: jiro4989
           version: 'v1.0.0'
           arch: 'amd64'
-          desc: 'test package'
+          desc: "${{ matrix.desc }}"
+        if: matrix.desc != ''
+
+      - uses: ./
+        with:
+          package: testbin
+          package_root: .debpkg
+          maintainer: jiro4989
+          version: 'v1.0.0'
+          arch: 'amd64'
+        if: matrix.desc == ''
+
       - name: install deb package
         run: sudo dpkg -i *.deb
+      - name: Print deb package information
+        run: dpkg -I ./*.deb
       - name: check files
         run: |
           which testbin
@@ -32,11 +85,16 @@ jobs:
           testbin2
           find /usr/lib/testbin/
           cat /usr/lib/testbin/testbin.conf
+      - name: Print installed deb package size
+        run: >
+          dpkg-query -W -f='${Installed-Size}\t${Package}\n' |
+          sort -nr |
+          grep testbin
 
   test-github-ref-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: |
           mkdir -p .debpkg/usr/bin
           mkdir -p .debpkg/usr/lib/testbin
@@ -52,6 +110,7 @@ jobs:
           version: 'refs/tags/v1.0.0'
           arch: 'amd64'
           desc: 'test package'
+        id: build
       - name: install deb package
         run: sudo dpkg -i *.deb
       - name: check files
@@ -62,11 +121,13 @@ jobs:
           testbin2
           find /usr/lib/testbin/
           cat /usr/lib/testbin/testbin.conf
+      - name: Test file_name
+        run: test ${{ steps.build.outputs.file_name }} = 'testbin_1.0.0_amd64.deb'
 
   test-nim-package:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: jiro4989/setup-nim-action@v1
       - run: |
           git clone https://github.com/jiro4989/nimjson app
@@ -95,7 +156,7 @@ jobs:
   test-postinst:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: |
           mkdir -p .debpkg/usr/bin
           mkdir -p .debpkg/usr/lib/testbin
@@ -134,7 +195,7 @@ jobs:
   test-depends:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: jiro4989/setup-nim-action@v1
       - run: |
           git clone https://github.com/jiro4989/nimjson app
@@ -156,7 +217,52 @@ jobs:
           depends: 'libc6 (>= 2.2.1), git'
           arch: 'amd64'
           desc: 'test package'
-      - run: sudo dpkg -i *.deb
-      - run: which nimjson
-      - run: nimjson -h
-      - run: dpkg -s nimjson
+          keep_ownership: true
+      - name: Install deb package
+        run: sudo dpkg -i ./*.deb
+      - name: Print deb package information
+        run: dpkg -I ./*.deb
+      - name: Print installed command path
+        run: which nimjson
+      - name: Print command help message
+        run: nimjson -h
+      - name: Print installed deb package information
+        run: dpkg -s nimjson
+      - name: Print installed deb package size
+        run: >
+          dpkg-query -W -f='${Installed-Size}\t${Package}\n' |
+          sort -nr |
+          grep nimjson
+
+  test-debian:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image:
+          - 'ubuntu:22.04'
+          - 'debian:9'
+          - 'debian:stable'
+        compress_type:
+          - 'gzip'
+          - 'xz'
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          mkdir -p .debpkg/usr/bin
+          mkdir -p .debpkg/usr/lib/testbin
+          echo -e "echo hello" > .debpkg/usr/bin/testbin
+          echo -e "echo hello2" > .debpkg/usr/bin/testbin2
+          echo -e "a=1" > .debpkg/usr/lib/testbin/testbin.conf
+          chmod +x .debpkg/usr/bin/*
+
+      - uses: ./
+        with:
+          package: testbin
+          package_root: .debpkg
+          maintainer: jiro4989
+          version: 'v1.0.0'
+          arch: 'amd64'
+          compress_type: ${{ matrix.compress_type }}
+
+      - name: Test installing on docker
+        run: docker run --rm -v $PWD:/work -w /work -t ${{ matrix.image }} dpkg -i ./*.deb

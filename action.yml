@@ -14,6 +14,10 @@ inputs:
   version:
     description: 'Package version.'
     required: true
+  installed_size:
+    description: 'Package installed size. GitHub Actions set summarized byte size of `package_root` directory when this parameter is empty.'
+    default: ''
+    required: false
   depends:
     description: 'Package dependencies.'
     default: 'none'
@@ -24,11 +28,27 @@ inputs:
     required: false
   desc:
     description: 'Package description.'
-    default: ''
+    default: 'no description'
     required: false
+  compress_type:
+    description: >
+      Set the compression type used when building.
+      Allowed types gzip, xz, zstd, none.
+      Default is gzip.
+    default: 'gzip'
+    required: false
+  keep_ownership:
+    description: >
+      If set to true, it creates the package keeping files' owner and group, otherwise they will be assigned to root
+      Default is false.
+    default: 'false'
+    required: false
+outputs:
+  file_name:
+    description: 'File name of resulting .deb file.'
 runs:
   using: 'docker'
-  image: 'Dockerfile'
+  image: 'docker://jiro4989/build-deb-action:3.0.0'
 
 # Ref: https://haya14busa.github.io/github-action-brandings/
 # TODO: update branding if you want.

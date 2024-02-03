@@ -27,6 +27,10 @@ inputs:
   version:
     description: 'Package version.'
     required: true
+  installed_size:
+    description: 'Package installed size. GitHub Actions set summarized byte size of `package_root` directory when this parameter is empty.'
+    default: ''
+    required: false
   depends:
     description: 'Package dependencies.'
     default: 'none'
@@ -39,6 +43,27 @@ inputs:
     description: 'Package description.'
     default: ''
     required: false
+  compress_type:
+    description: >
+      Set the compression type used when building.
+      Allowed types gzip, xz, zstd, none.
+      Default is gzip.
+    default: 'gzip'
+    required: false
+  keep_ownership:
+    description: >
+      If set to true, it creates the package keeping files' owner and group, otherwise they will be assigned to root
+      Default is false.
+    default: 'false'
+    required: false
+```
+
+## Output
+
+```yaml
+outputs:
+  file_name:
+    description: 'File name of resulting .deb file.'
 ```
 
 ## Usage
@@ -64,7 +89,12 @@ jobs:
           echo -e "echo sample" > .debpkg/usr/bin/samplescript
           chmod +x .debpkg/usr/bin/samplescript
           echo -e "a=1" > .debpkg/usr/lib/samplescript/samplescript.conf
-      - uses: jiro4989/build-deb-action@v2
+
+          # create DEBIAN directory if you want to add other pre/post scripts
+          mkdir -p .debpkg/DEBIAN
+          echo -e "echo postinst" > .debpkg/DEBIAN/postinst
+          chmod +x .debpkg/DEBIAN/postinst
+      - uses: jiro4989/build-deb-action@v3
         with:
           package: samplescript
           package_root: .debpkg
@@ -77,20 +107,43 @@ jobs:
 
 ## Example projects
 
-* https://github.com/jiro4989/nimjson
+* <https://github.com/jiro4989/nimjson>
+
+## Changes
+
+### v2 -> v3
+
+* PR #45 - Makes all files owned by root
+  * Changed default file owner to `root`. Use `keep_ownership: true` if you want to revert to `v2` behavior.
 
 ## Development
+
+### Flow
+
+1. Create a new branch
+1. Commit
+1. Merge the branch into `develop` branch
+1. Push `develop` branch
+1. Check passing all tests
+1. Create a new pull request
+1. Merge the branch into `master` branch
+
+This actions is using a DockerHub image.  We must push `docker-v0.0.0` git-tag
+to create a new tagged docker image.  Published a new tagged docker image, and
+change tag of action.yml into `develop` branch, and check passing all tests,
+and merge into `master`.
 
 ### Release
 
 #### [haya14busa/action-bumpr](https://github.com/haya14busa/action-bumpr)
+
 You can bump version on merging Pull Requests with specific labels (bump:major,bump:minor,bump:patch).
 Pushing tag manually by yourself also work.
 
 #### [haya14busa/action-update-semver](https://github.com/haya14busa/action-update-semver)
 
 This action updates major/minor release tags on a tag push. e.g. Update v1 and v1.2 tag when released v1.2.3.
-ref: https://help.github.com/en/articles/about-actions#versioning-your-action
+ref: <https://help.github.com/en/articles/about-actions#versioning-your-action>
 
 ### Lint - reviewdog integration
 
@@ -101,7 +154,7 @@ which is useful for Docker container based actions.
 
 Supported linters:
 
-- [reviewdog/action-shellcheck](https://github.com/reviewdog/action-shellcheck)
-- [reviewdog/action-hadolint](https://github.com/reviewdog/action-hadolint)
-- [reviewdog/action-misspell](https://github.com/reviewdog/action-misspell)
+* [reviewdog/action-shellcheck](https://github.com/reviewdog/action-shellcheck)
+* [reviewdog/action-hadolint](https://github.com/reviewdog/action-hadolint)
+* [reviewdog/action-misspell](https://github.com/reviewdog/action-misspell)
 
