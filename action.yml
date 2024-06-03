@@ -22,6 +22,10 @@ inputs:
     description: 'Package dependencies.'
     default: 'none'
     required: false
+  homepage:
+    description: 'Package homepage url.'
+    default: 'none'
+    required: false
   arch:
     description: 'Package architecture.'
     default: 'amd64'
