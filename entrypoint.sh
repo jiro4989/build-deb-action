@@ -25,6 +25,7 @@ esac
   --version:"$INPUT_VERSION" \
   --installed-size:"$INPUT_INSTALLED_SIZE" \
   --depends:"$INPUT_DEPENDS" \
+  --homepage:"$INPUT_HOMEPAGE" \
   --arch:"$INPUT_ARCH" \
   --maintainer:"$INPUT_MAINTAINER" \
   --description:"$INPUT_DESC"

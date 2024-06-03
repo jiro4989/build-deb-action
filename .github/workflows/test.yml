@@ -218,6 +218,7 @@ jobs:
           arch: 'amd64'
           desc: 'test package'
           keep_ownership: true
+          homepage: 'https://github.com/jiro4989/build-deb-action'
       - name: Install deb package
         run: sudo dpkg -i ./*.deb
       - name: Print deb package information
