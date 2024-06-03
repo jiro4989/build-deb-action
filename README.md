@@ -35,6 +35,10 @@ inputs:
     description: 'Package dependencies.'
     default: 'none'
     required: false
+  homepage:
+    description: 'Package homepage url.'
+    default: 'none'
+    required: false
   arch:
     description: 'Package architecture.'
     default: 'amd64'
@@ -103,6 +107,7 @@ jobs:
           arch: 'amd64'
           depends: 'libc6 (>= 2.2.1), git'
           desc: 'this is sample package.'
+          homepage: 'https://github.com/jiro4989/build-deb-action'
 ```
 
 ## Example projects
