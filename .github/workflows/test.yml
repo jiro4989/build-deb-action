@@ -248,6 +248,7 @@ jobs:
       matrix:
         image:
           - 'ubuntu:22.04'
+          - 'ubuntu:24.04'
           - 'debian:9'
           - 'debian:stable'
         compress_type:
