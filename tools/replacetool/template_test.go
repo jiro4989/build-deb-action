@@ -124,7 +124,7 @@ func TestRender(t *testing.T) {
 				Maintainer:    "jiro4989",
 			},
 			want: `Package: nimjson
-Version: v1.0.0
+Version: 1.0.0
 Installed-Size: 999
 Architecture: amd64
 Maintainer: jiro4989
@@ -146,7 +146,7 @@ Maintainer: jiro4989
 				Description:   "sample description.",
 			},
 			want: `Package: nimjson
-Version: v1.0.0
+Version: 1.0.0
 Installed-Size: 999
 Architecture: amd64
 Maintainer: jiro4989
@@ -170,7 +170,7 @@ Description: sample description.
 				Description:   "sample description.",
 			},
 			want: `Package: nimjson
-Version: v1.0.0
+Version: 1.0.0
 Installed-Size: 999
 Architecture: amd64
 Maintainer: jiro4989
@@ -192,7 +192,7 @@ Description: sample description.
 				Section:       "unknown",
 			},
 			want: `Package: nimjson
-Version: v1.0.0
+Version: 1.0.0
 Installed-Size: 999
 Architecture: amd64
 Maintainer: jiro4989
@@ -213,7 +213,7 @@ Section: unknown
 				Description:   "sample1.\nsample2.\n\nsample3.",
 			},
 			want: `Package: nimjson
-Version: v1.0.0
+Version: 1.0.0
 Installed-Size: 999
 Architecture: amd64
 Maintainer: jiro4989

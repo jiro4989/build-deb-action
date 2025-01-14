@@ -63,6 +63,7 @@ func (p *TemplateParam) validate() error {
 }
 
 func (p *TemplateParam) format() {
+	p.Version = strings.TrimPrefix(p.Version, "v")
 	p.Description = formatDescription(p.Description)
 }
 

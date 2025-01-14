@@ -35,7 +35,7 @@ func TestMainFunc(t *testing.T) {
 	assert.NoError(err)
 	gotstr := string(b)
 	want := `Package: nimjson
-Version: v2.0.0
+Version: 2.0.0
 Installed-Size: 9999
 Architecture: amd64
 Maintainer: jiro4989
