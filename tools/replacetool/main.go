@@ -23,6 +23,7 @@ func main() {
 }
 
 func Main(tmplFile string, outFile string) ExitCode {
+	// control ファイルのテンプレートを読み込み
 	tf, err := os.Open(tmplFile)
 	if err != nil {
 		return exitCodeErrCouldNotOpenFile
@@ -31,6 +32,7 @@ func Main(tmplFile string, outFile string) ExitCode {
 	b, err := io.ReadAll(tf)
 	tmpl := string(b)
 
+	// テンプレートへ値埋め込み
 	p, err := loadTemplateParam()
 	if err != nil {
 		return exitCodeErrInvalidTemplateParam
@@ -41,6 +43,7 @@ func Main(tmplFile string, outFile string) ExitCode {
 		return exitCodeErrCouldNotRender
 	}
 
+	// 結果をファイルに出力
 	f, err := os.Create(outFile)
 	if err != nil {
 		return exitCodeErrCouldNotCreateFile
