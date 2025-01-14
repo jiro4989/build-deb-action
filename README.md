@@ -33,15 +33,15 @@ inputs:
     required: false
   depends:
     description: 'Package dependencies.'
-    default: 'none'
+    default: ''
     required: false
   homepage:
     description: 'Package homepage url.'
-    default: 'none'
+    default: ''
     required: false
   section:
     description: 'Package section.'
-    default: 'none'
+    default: ''
     required: false
   arch:
     description: 'Package architecture.'
@@ -88,7 +88,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: create sample script
         run: |
@@ -102,7 +102,7 @@ jobs:
           mkdir -p .debpkg/DEBIAN
           echo -e "echo postinst" > .debpkg/DEBIAN/postinst
           chmod +x .debpkg/DEBIAN/postinst
-      - uses: jiro4989/build-deb-action@v3
+      - uses: jiro4989/build-deb-action@v4
         with:
           package: samplescript
           package_root: .debpkg
@@ -119,6 +119,13 @@ jobs:
 * <https://github.com/jiro4989/nimjson>
 
 ## Changes
+
+### v3 -> v4
+
+* #54 Migrate Nim to Golang
+  * `replacetool` was replaced by golang
+  * Docker base image was changed from ubuntu 22.04 to ubuntu 24.04
+  * Default value of optional parameters (`depends`, `homepage` and `section`) was changed from `none` to `""` (empty string)
 
 ### v2 -> v3
 
@@ -166,4 +173,3 @@ Supported linters:
 * [reviewdog/action-shellcheck](https://github.com/reviewdog/action-shellcheck)
 * [reviewdog/action-hadolint](https://github.com/reviewdog/action-hadolint)
 * [reviewdog/action-misspell](https://github.com/reviewdog/action-misspell)
-
