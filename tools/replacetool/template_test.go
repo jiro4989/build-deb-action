@@ -202,6 +202,7 @@ Section: unknown
 			wantErr: false,
 		},
 		{
+			// text/template を使っているので HTML 文字列がエスケープされたりしないはず
 			desc: "ok: multiline description",
 			tmpl: tmpl,
 			p: &TemplateParam{
@@ -210,7 +211,7 @@ Section: unknown
 				InstalledSize: "999",
 				Architecture:  "amd64",
 				Maintainer:    "jiro4989",
-				Description:   "sample1.\nsample2.\n\nsample3.",
+				Description:   "sample1.\nsample2.\n\nsample3.\n<div>test</div><br>\n<a href=\"https://github.com/jiro4989\">URL</a>",
 			},
 			want: `Package: nimjson
 Version: 1.0.0
@@ -221,6 +222,8 @@ Description: sample1.
  sample2.
  .
  sample3.
+ <div>test</div><br>
+ <a href="https://github.com/jiro4989">URL</a>
 `,
 			wantErr: false,
 		},
