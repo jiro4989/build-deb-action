@@ -226,8 +226,9 @@ jobs:
           keep_ownership: true
           homepage: 'https://github.com/jiro4989/build-deb-action'
           section: 'unknown'
+        id: build
       - name: Install deb package
-        run: sudo dpkg -i ./*.deb
+        run: sudo dpkg -i ${{ steps.build.outputs.file_name }}
       - name: Print deb package information
         run: dpkg -I ./*.deb
       - name: Print installed command path
