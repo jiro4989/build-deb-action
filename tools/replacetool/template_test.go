@@ -102,15 +102,15 @@ func TestRender(t *testing.T) {
 	f, err := os.Open(filepath.Join("template", "control"))
 	assert.NoError(t, err)
 	defer f.Close()
-	b,err := io.ReadAll(f)
+	b, err := io.ReadAll(f)
 	assert.NoError(t, err)
 	tmpl := string(b)
 
 	tests := []struct {
 		desc    string
-		tmpl string
+		tmpl    string
 		p       *TemplateParam
-		want string
+		want    string
 		wantErr bool
 	}{
 		{
@@ -140,10 +140,10 @@ Maintainer: jiro4989
 				InstalledSize: "999",
 				Architecture:  "amd64",
 				Maintainer:    "jiro4989",
-				Depends: "libc6 (>= 2.2.1), git",
-				Homepage: "https://github.com/jiro4989/nimjson",
-				Section: "unknown",
-				Description: "sample description.",
+				Depends:       "libc6 (>= 2.2.1), git",
+				Homepage:      "https://github.com/jiro4989/nimjson",
+				Section:       "unknown",
+				Description:   "sample description.",
 			},
 			want: `Package: nimjson
 Version: v1.0.0
@@ -166,8 +166,8 @@ Description: sample description.
 				InstalledSize: "999",
 				Architecture:  "amd64",
 				Maintainer:    "jiro4989",
-				Homepage: "https://github.com/jiro4989/nimjson",
-				Description: "sample description.",
+				Homepage:      "https://github.com/jiro4989/nimjson",
+				Description:   "sample description.",
 			},
 			want: `Package: nimjson
 Version: v1.0.0
@@ -188,8 +188,8 @@ Description: sample description.
 				InstalledSize: "999",
 				Architecture:  "amd64",
 				Maintainer:    "jiro4989",
-				Depends: "libc6 (>= 2.2.1), git",
-				Section: "unknown",
+				Depends:       "libc6 (>= 2.2.1), git",
+				Section:       "unknown",
 			},
 			want: `Package: nimjson
 Version: v1.0.0
@@ -207,7 +207,7 @@ Section: unknown
 		t.Run(tt.desc, func(t *testing.T) {
 			assert := assert.New(t)
 
-			got,err := render(tt.tmpl, tt.p)
+			got, err := render(tt.tmpl, tt.p)
 			if tt.wantErr {
 				assert.Error(err)
 				return
