@@ -3,15 +3,15 @@ Version: {{ .Version }}
 Installed-Size: {{ .InstalledSize }}
 Architecture: {{ .Architecture }}
 Maintainer: {{ .Maintainer }}
-{{ if .Depends }}
+{{ if .Depends -}}
 Depends: {{ .Depends }}
-{{ end }}
-{{ if .Homepage }}
+{{ end -}}
+{{ if .Homepage -}}
 Homepage: {{ .Homepage }}
-{{ end }}
-{{ if .Section }}
+{{ end -}}
+{{ if .Section -}}
 Section: {{ .Section }}
-{{ end }}
-{{ if .Description }}
+{{ end -}}
+{{ if .Description -}}
 Description: {{ .Description }}
-{{ end }}
+{{ end -}}
