@@ -219,6 +219,7 @@ jobs:
           desc: 'test package'
           keep_ownership: true
           homepage: 'https://github.com/jiro4989/build-deb-action'
+          section: 'unknown'
       - name: Install deb package
         run: sudo dpkg -i ./*.deb
       - name: Print deb package information

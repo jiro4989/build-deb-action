@@ -39,6 +39,10 @@ inputs:
     description: 'Package homepage url.'
     default: 'none'
     required: false
+  section:
+    description: 'Package section.'
+    default: 'none'
+    required: false
   arch:
     description: 'Package architecture.'
     default: 'amd64'
