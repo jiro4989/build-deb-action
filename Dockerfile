@@ -11,7 +11,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update -yqq && \
-    apt-get install -y \
+    apt-get install -y --no-install-recommends \
             devscripts \
             build-essential \
             cdbs
