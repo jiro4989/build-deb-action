@@ -19,17 +19,7 @@ case "${INPUT_COMPRESS_TYPE}" in
     ;;
 esac
 
-/replacetool \
-  --debian-dir:/template/DEBIAN \
-  --package:"$INPUT_PACKAGE" \
-  --version:"$INPUT_VERSION" \
-  --installed-size:"$INPUT_INSTALLED_SIZE" \
-  --depends:"$INPUT_DEPENDS" \
-  --homepage:"$INPUT_HOMEPAGE" \
-  --section:"$INPUT_SECTION" \
-  --arch:"$INPUT_ARCH" \
-  --maintainer:"$INPUT_MAINTAINER" \
-  --description:"$INPUT_DESC"
+replacetool /replacetool_template/control /template/DEBIAN/control
 
 cp -r /template/DEBIAN "$INPUT_PACKAGE_ROOT/"
 
