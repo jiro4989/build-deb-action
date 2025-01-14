@@ -1,0 +1,17 @@
+Package: {{ .Package }}
+Version: {{ .Version }}
+Installed-Size: {{ .InstalledSize }}
+Architecture: {{ .Architecture }}
+Maintainer: {{ .Maintainer }}
+{{ if .Depends -}}
+Depends: {{ .Depends }}
+{{ end -}}
+{{ if .Homepage -}}
+Homepage: {{ .Homepage }}
+{{ end -}}
+{{ if .Section -}}
+Section: {{ .Section }}
+{{ end -}}
+{{ if .Description -}}
+Description: {{ .Description }}
+{{ end -}}

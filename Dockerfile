@@ -1,24 +1,24 @@
-FROM ubuntu:22.04
+FROM golang:1.23.4-bookworm AS builder
+
+# static build
+ENV CGO_ENABLED=0
+
+RUN --mount=type=bind,source=tools/replacetool,target=. go build -o /replacetool
+
+FROM ubuntu:24.04 AS runtime
 
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update -yqq && \
-    apt-get install -y \
+RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    apt-get update -yqq && \
+    apt-get install -y --no-install-recommends \
             devscripts \
             build-essential \
-            cdbs \
-            && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-ENV PATH /root/.nimble/bin:$PATH
-RUN curl https://nim-lang.org/choosenim/init.sh -sSf > init.sh
-RUN sh init.sh -y \
-    && choosenim stable
-COPY tools /tools
-RUN cd /tools && \
-    nimble build -Y && \
-    cp -p bin/* /
+            cdbs
 
 COPY template /template
+COPY tools/replacetool/template /replacetool_template
 COPY entrypoint.sh /usr/local/bin/
+COPY --from=builder /replacetool /usr/local/bin/
+
 ENTRYPOINT ["entrypoint.sh"]

@@ -27,6 +27,6 @@ fi
 
 readonly IMAGE="jiro4989/build-deb-action:$VERSION"
 info "IMAGE = $IMAGE"
-docker build --no-cache -t "$IMAGE" .
+docker build --no-cache -t "$IMAGE" --target runtime .
 docker push "$IMAGE"
 info "Successful docker build and push"
