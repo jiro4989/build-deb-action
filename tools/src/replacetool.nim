@@ -6,7 +6,7 @@ import streams
 type
   Options = object
     debianDir, package, maintainer, version, installedSize, depends, arch, desc,
-      homepage: string
+      homepage, section: string
 
 proc getCmdOpts(params: seq[string]): Options =
   var optParser = initOptParser(params)
@@ -32,13 +32,15 @@ proc getCmdOpts(params: seq[string]): Options =
         result.desc = val
       of "homepage":
         result.homepage = val
+      of "section":
+        result.section = val
     of cmdEnd:
       assert false # cannot happen
     else:
       assert false
 
 proc replaceTemplate(body, package, maintainer, version, installedSize, arch,
-    depends, desc, homepage: string): string =
+    depends, desc, homepage, section: string): string =
   result =
     body
       .replace("{PACKAGE}", package)
@@ -49,6 +51,7 @@ proc replaceTemplate(body, package, maintainer, version, installedSize, arch,
       .replace("{DEPENDS}", depends)
       .replace("{DESC}", desc)
       .replace("{HOMEPAGE}", homepage)
+      .replace("{SECTION}", section)
 
 proc formatDescription*(desc: string): string =
   var strm = newStringStream(desc)
@@ -79,15 +82,22 @@ proc formatHomepage(homepage: string): string =
     else:
       ""
 
+proc formatSection(homepage: string): string =
+  result =
+    if homepage != "none":
+      "Section: " & homepage & "\n"
+    else:
+      ""
+
 proc fixFile(file, package, maintainer, version, installedSize, arch, depends,
-    desc, homepage: string) =
+    desc, homepage, section: string) =
   let
     body = readFile(file)
     fixedBody = replaceTemplate(body, package = package, maintainer = maintainer,
                                 version = version,
                                 installedSize = installedSize, arch = arch,
                                 depends = depends, desc = desc,
-                                homepage = homepage)
+                                homepage = homepage, section = section)
   writeFile(file, fixedBody)
 
 when isMainModule:
@@ -104,8 +114,9 @@ when isMainModule:
     arch = params.arch
     depends = params.depends.formatDepends
     homepage = params.homepage.formatHomepage
+    section = params.section.formatSection
     desc = params.desc.formatDescription
 
   fixFile(controlFile, package = package, maintainer = maintainer, version = version,
           installedSize = installedSize, arch = arch, depends = depends,
-          desc = desc, homepage = homepage)
+          desc = desc, homepage = homepage, section = section)
