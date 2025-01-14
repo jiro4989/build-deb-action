@@ -102,6 +102,7 @@ jobs:
           mkdir -p .debpkg/DEBIAN
           echo -e "echo postinst" > .debpkg/DEBIAN/postinst
           chmod +x .debpkg/DEBIAN/postinst
+
       - uses: jiro4989/build-deb-action@v4
         with:
           package: samplescript
@@ -112,6 +113,11 @@ jobs:
           depends: 'libc6 (>= 2.2.1), git' # optional
           desc: 'this is sample package.' # optional
           homepage: 'https://github.com/jiro4989/build-deb-action' # optional
+        id: build
+
+      # Check a created deb file
+      - name: Check a path of deb file
+        run: ls ${{ steps.build.outputs.file_name }}
 ```
 
 ## Example projects
