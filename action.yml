@@ -20,15 +20,15 @@ inputs:
     required: false
   depends:
     description: 'Package dependencies.'
-    default: 'none'
+    default: ''
     required: false
   homepage:
     description: 'Package homepage url.'
-    default: 'none'
+    default: ''
     required: false
   section:
     description: 'Package section.'
-    default: 'none'
+    default: ''
     required: false
   arch:
     description: 'Package architecture.'
