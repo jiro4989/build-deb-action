@@ -35,6 +35,7 @@ func Main(tmplFile string, outFile string) ExitCode {
 	if err != nil {
 		return exitCodeErrInvalidTemplateParam
 	}
+	p.format()
 	s, err := render(tmpl, p)
 	if err != nil {
 		return exitCodeErrCouldNotRender

@@ -201,12 +201,36 @@ Section: unknown
 `,
 			wantErr: false,
 		},
+		{
+			desc: "ok: multiline description",
+			tmpl: tmpl,
+			p: &TemplateParam{
+				Package:       "nimjson",
+				Version:       "v1.0.0",
+				InstalledSize: "999",
+				Architecture:  "amd64",
+				Maintainer:    "jiro4989",
+				Description:   "sample1.\nsample2.\n\nsample3.",
+			},
+			want: `Package: nimjson
+Version: v1.0.0
+Installed-Size: 999
+Architecture: amd64
+Maintainer: jiro4989
+Description: sample1.
+ sample2.
+ .
+ sample3.
+`,
+			wantErr: false,
+		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.desc, func(t *testing.T) {
 			assert := assert.New(t)
 
+			tt.p.format()
 			got, err := render(tt.tmpl, tt.p)
 			if tt.wantErr {
 				assert.Error(err)

@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"os"
+	"strings"
 	"text/template"
 )
 
@@ -61,6 +62,10 @@ func (p *TemplateParam) validate() error {
 	return nil
 }
 
+func (p *TemplateParam) format() {
+	p.Description = formatDescription(p.Description)
+}
+
 func render(tmpl string, p *TemplateParam) (string, error) {
 	t, err := template.New("debian_control").Parse(tmpl)
 	if err != nil {
@@ -73,4 +78,24 @@ func render(tmpl string, p *TemplateParam) (string, error) {
 	}
 
 	return buf.String(), nil
+}
+
+func formatDescription(s string) string {
+	if s == "" {
+		return ""
+	}
+
+	lines := make([]string, 0)
+	for i, line := range strings.Split(s, "\n") {
+		var l strings.Builder
+		if 0 < i {
+			l.WriteString(" ")
+		}
+		if line == "" {
+			l.WriteString(".")
+		}
+		l.WriteString(line)
+		lines = append(lines, l.String())
+	}
+	return strings.Join(lines, "\n")
 }
