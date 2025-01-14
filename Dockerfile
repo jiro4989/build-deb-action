@@ -19,6 +19,6 @@ RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
 COPY template /template
 COPY tools/replacetool/template /replacetool_template
 COPY entrypoint.sh /usr/local/bin/
-COPY --from=buidler /replacetool /usr/local/bin/
+COPY --from=builder /replacetool /usr/local/bin/
 
 ENTRYPOINT ["entrypoint.sh"]
