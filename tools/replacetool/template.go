@@ -85,9 +85,10 @@ func render(tmpl string, p *TemplateParam) (string, error) {
 // 複数行の Description は以下のようになる。
 //
 // Description: 1 行目.
-//  2 行目.
-//  .
-//  4 行目.
+//
+//	2 行目.
+//	.
+//	4 行目.
 //
 // 2 行目以降は、先頭が半角スペース 1 文字から始まる。
 // 空行の場合は . のみ書く。
