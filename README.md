@@ -108,10 +108,10 @@ jobs:
           package_root: .debpkg
           maintainer: your_name
           version: ${{ github.ref }} # refs/tags/v*.*.*
-          arch: 'amd64'
-          depends: 'libc6 (>= 2.2.1), git'
-          desc: 'this is sample package.'
-          homepage: 'https://github.com/jiro4989/build-deb-action'
+          arch: 'amd64' # optional
+          depends: 'libc6 (>= 2.2.1), git' # optional
+          desc: 'this is sample package.' # optional
+          homepage: 'https://github.com/jiro4989/build-deb-action' # optional
 ```
 
 ## Example projects
