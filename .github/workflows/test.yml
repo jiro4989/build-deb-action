@@ -25,7 +25,7 @@ jobs:
       run:
         working-directory: tools/replacetool
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go }}
@@ -51,7 +51,7 @@ jobs:
             sample package3
           - ''
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: |
           mkdir -p .debpkg/usr/bin
           mkdir -p .debpkg/usr/lib/testbin
@@ -100,7 +100,7 @@ jobs:
   test-github-ref-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: |
           mkdir -p .debpkg/usr/bin
           mkdir -p .debpkg/usr/lib/testbin
@@ -133,7 +133,7 @@ jobs:
   test-nim-package:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: jiro4989/setup-nim-action@v1
       - run: |
           git clone https://github.com/jiro4989/nimjson app
@@ -162,7 +162,7 @@ jobs:
   test-postinst:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: |
           mkdir -p .debpkg/usr/bin
           mkdir -p .debpkg/usr/lib/testbin
@@ -201,7 +201,7 @@ jobs:
   test-depends:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: jiro4989/setup-nim-action@v1
       - run: |
           git clone https://github.com/jiro4989/nimjson app
@@ -256,7 +256,7 @@ jobs:
           - 'gzip'
           - 'xz'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: |
           mkdir -p .debpkg/usr/bin
           mkdir -p .debpkg/usr/lib/testbin
