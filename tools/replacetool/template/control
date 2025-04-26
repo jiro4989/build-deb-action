@@ -6,6 +6,9 @@ Maintainer: {{ .Maintainer }}
 {{ if .Depends -}}
 Depends: {{ .Depends }}
 {{ end -}}
+{{ if .PreDepends -}}
+Pre-Depends: {{ .PreDepends }}
+{{ end -}}
 {{ if .Homepage -}}
 Homepage: {{ .Homepage }}
 {{ end -}}
