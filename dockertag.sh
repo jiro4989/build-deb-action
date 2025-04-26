@@ -21,7 +21,7 @@ err() {
 }
 
 if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-  err "tag version (VERSION = $VERSION) is illegal. tag format must be 'v0.0.0'."
+  err "tag version (VERSION = $VERSION) is illegal. tag format must be '0.0.0'."
   exit 1
 fi
 
