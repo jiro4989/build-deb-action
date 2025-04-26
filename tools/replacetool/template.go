@@ -15,6 +15,7 @@ type TemplateParam struct {
 	Architecture  string
 	Maintainer    string
 	Depends       string
+	PreDepends    string
 	Homepage      string
 	Section       string
 	Description   string
@@ -28,6 +29,7 @@ func loadTemplateParam() (*TemplateParam, error) {
 		Architecture:  os.Getenv("INPUT_ARCH"),
 		Maintainer:    os.Getenv("INPUT_MAINTAINER"),
 		Depends:       os.Getenv("INPUT_DEPENDS"),
+		PreDepends:    os.Getenv("INPUT_PRE_DEPENDS"),
 		Homepage:      os.Getenv("INPUT_HOMEPAGE"),
 		Section:       os.Getenv("INPUT_SECTION"),
 		Description:   os.Getenv("INPUT_DESC"),

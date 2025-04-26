@@ -22,6 +22,10 @@ inputs:
     description: 'Package dependencies.'
     default: ''
     required: false
+  pre_depends:
+    description: 'Package pre-dependencies.'
+    default: ''
+    required: false
   homepage:
     description: 'Package homepage url.'
     default: ''
@@ -56,7 +60,7 @@ outputs:
     description: 'File name of resulting .deb file.'
 runs:
   using: 'docker'
-  image: 'docker://jiro4989/build-deb-action:4.0.0'
+  image: 'docker://jiro4989/build-deb-action:4.1.0'
 
 # Ref: https://haya14busa.github.io/github-action-brandings/
 # TODO: update branding if you want.

@@ -202,6 +202,30 @@ Section: unknown
 			wantErr: false,
 		},
 		{
+			desc: "ok: depends and pre-depends",
+			tmpl: tmpl,
+			p: &TemplateParam{
+				Package:       "nimjson",
+				Version:       "v1.0.0",
+				InstalledSize: "999",
+				Architecture:  "amd64",
+				Maintainer:    "jiro4989",
+				Depends:       "libc6 (>= 2.2.1), git",
+				PreDepends:    "zstd, zsh",
+				Section:       "unknown",
+			},
+			want: `Package: nimjson
+Version: 1.0.0
+Installed-Size: 999
+Architecture: amd64
+Maintainer: jiro4989
+Depends: libc6 (>= 2.2.1), git
+Pre-Depends: zstd, zsh
+Section: unknown
+`,
+			wantErr: false,
+		},
+		{
 			// text/template を使っているので HTML 文字列がエスケープされたりしないはず
 			desc: "ok: multiline description",
 			tmpl: tmpl,
