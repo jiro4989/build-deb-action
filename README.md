@@ -35,6 +35,10 @@ inputs:
     description: 'Package dependencies.'
     default: ''
     required: false
+  pre_depends:
+    description: 'Package pre-dependencies.'
+    default: ''
+    required: false
   homepage:
     description: 'Package homepage url.'
     default: ''
@@ -110,7 +114,8 @@ jobs:
           maintainer: your_name
           version: ${{ github.ref }} # refs/tags/v*.*.*
           arch: 'amd64' # optional
-          depends: 'libc6 (>= 2.2.1), git' # optional
+          depends: 'git, jq' # optional
+          pre_depends: 'libc6 (>= 2.2.1)' # optional
           desc: 'this is sample package.' # optional
           homepage: 'https://github.com/jiro4989/build-deb-action' # optional
         id: build
