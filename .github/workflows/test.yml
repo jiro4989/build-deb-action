@@ -223,7 +223,11 @@ jobs:
           depends: 'git, jq'
           pre_depends: 'libc6 (>= 2.2.1)'
           arch: 'amd64'
-          desc: 'test package'
+          desc: |
+            sample
+            code
+            is
+            here
           keep_ownership: true
           homepage: 'https://github.com/jiro4989/build-deb-action'
           section: 'unknown'
