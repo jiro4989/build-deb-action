@@ -18,6 +18,7 @@ type TemplateParam struct {
 	PreDepends    string
 	Homepage      string
 	Section       string
+	Priority      string
 	Description   string
 }
 
@@ -32,6 +33,7 @@ func loadTemplateParam() (*TemplateParam, error) {
 		PreDepends:    os.Getenv("INPUT_PRE_DEPENDS"),
 		Homepage:      os.Getenv("INPUT_HOMEPAGE"),
 		Section:       os.Getenv("INPUT_SECTION"),
+		Priority:      os.Getenv("INPUT_PRIORITY"),
 		Description:   os.Getenv("INPUT_DESC"),
 	}
 	if err := p.validate(); err != nil {

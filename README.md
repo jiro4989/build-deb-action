@@ -47,6 +47,10 @@ inputs:
     description: 'Package section.'
     default: ''
     required: false
+  priority:
+    description: 'Package priority.'
+    default: ''
+    required: false
   arch:
     description: 'Package architecture.'
     default: 'amd64'
@@ -118,6 +122,8 @@ jobs:
           pre_depends: 'libc6 (>= 2.2.1)' # optional
           desc: 'this is sample package.' # optional
           homepage: 'https://github.com/jiro4989/build-deb-action' # optional
+          section: 'unknown'   # optional
+          priority: 'required' # optional
         id: build
 
       # Check a created deb file

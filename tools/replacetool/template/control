@@ -15,6 +15,9 @@ Homepage: {{ .Homepage }}
 {{ if .Section -}}
 Section: {{ .Section }}
 {{ end -}}
+{{ if .Priority -}}
+Priority: {{ .Priority }}
+{{ end -}}
 {{ if .Description -}}
 Description: {{ .Description }}
 {{ end -}}

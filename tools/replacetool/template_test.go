@@ -143,6 +143,7 @@ Maintainer: jiro4989
 				Depends:       "libc6 (>= 2.2.1), git",
 				Homepage:      "https://github.com/jiro4989/nimjson",
 				Section:       "unknown",
+				Priority:      "required",
 				Description:   "sample description.",
 			},
 			want: `Package: nimjson
@@ -153,6 +154,7 @@ Maintainer: jiro4989
 Depends: libc6 (>= 2.2.1), git
 Homepage: https://github.com/jiro4989/nimjson
 Section: unknown
+Priority: required
 Description: sample description.
 `,
 			wantErr: false,

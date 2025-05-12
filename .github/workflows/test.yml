@@ -227,6 +227,7 @@ jobs:
           keep_ownership: true
           homepage: 'https://github.com/jiro4989/build-deb-action'
           section: 'unknown'
+          priority: 'required'
         id: build
       - name: Install deb package
         run: sudo dpkg -i ${{ steps.build.outputs.file_name }}

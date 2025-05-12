@@ -34,6 +34,10 @@ inputs:
     description: 'Package section.'
     default: ''
     required: false
+  priority:
+    description: 'Package priority.'
+    default: ''
+    required: false
   arch:
     description: 'Package architecture.'
     default: 'amd64'
@@ -60,7 +64,7 @@ outputs:
     description: 'File name of resulting .deb file.'
 runs:
   using: 'docker'
-  image: 'docker://jiro4989/build-deb-action:4.1.0'
+  image: 'docker://jiro4989/build-deb-action:4.2.0'
 
 # Ref: https://haya14busa.github.io/github-action-brandings/
 # TODO: update branding if you want.
