@@ -91,6 +91,9 @@ func formatDescription(s string) string {
 		return ""
 	}
 
+	// 末尾改行、空白を削除する
+	s = strings.TrimSpace(s)
+
 	lines := make([]string, 0)
 	for i, line := range strings.Split(s, "\n") {
 		var l strings.Builder
