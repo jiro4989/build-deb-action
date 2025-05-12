@@ -34,6 +34,10 @@ inputs:
     description: 'Package section.'
     default: ''
     required: false
+  priority:
+    description: 'Package priority.'
+    default: ''
+    required: false
   arch:
     description: 'Package architecture.'
     default: 'amd64'
