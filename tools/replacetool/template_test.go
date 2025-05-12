@@ -289,6 +289,11 @@ func TestFormatDescription(t *testing.T) {
 			want: "1 line",
 		},
 		{
+			desc: "ok: ignore prefix newlines and whitespaces",
+			s:    " \n  \n  1 line",
+			want: "1 line",
+		},
+		{
 			desc: "ok: multi lines",
 			s:    "1 line\n2 line\n3 line",
 			want: `1 line
