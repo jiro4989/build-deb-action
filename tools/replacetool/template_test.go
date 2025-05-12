@@ -271,3 +271,61 @@ Description: sample1.
 		})
 	}
 }
+
+func TestFormatDescription(t *testing.T) {
+	tests := []struct {
+		desc string
+		s    string
+		want string
+	}{
+		{
+			desc: "ok: 1 line",
+			s:    "1 line",
+			want: "1 line",
+		},
+		{
+			desc: "ok: ignore trailing newline",
+			s:    "1 line\n",
+			want: "1 line",
+		},
+		{
+			desc: "ok: multi lines",
+			s:    "1 line\n2 line\n3 line",
+			want: `1 line
+ 2 line
+ 3 line`,
+		},
+		{
+			desc: "ok: multi lines and ignore trailing whitespaces",
+			s:    "1 line\n2 line\n3 line     ",
+			want: `1 line
+ 2 line
+ 3 line`,
+		},
+		{
+			desc: "ok: multi lines and ignore newlines and trailing whitespaces",
+			s:    "1 line\n2 line\n3 line     \n \n  \n\n ",
+			want: `1 line
+ 2 line
+ 3 line`,
+		},
+		{
+			desc: "ok: multi lines and blank line",
+			s:    "1 line\n2 line\n3 line\n\n4 line\n",
+			want: `1 line
+ 2 line
+ 3 line
+ .
+ 4 line`,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.desc, func(t *testing.T) {
+			assert := assert.New(t)
+
+			got := formatDescription(tt.s)
+			assert.Equal(tt.want, got)
+		})
+	}
+}
