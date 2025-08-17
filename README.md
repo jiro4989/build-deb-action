@@ -124,6 +124,7 @@ jobs:
           homepage: 'https://github.com/jiro4989/build-deb-action' # optional
           section: 'unknown'   # optional
           priority: 'required' # optional
+          conflicts: 'hello-traditional' # optional
         id: build
 
       # Check a created deb file
