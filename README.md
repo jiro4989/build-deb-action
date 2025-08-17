@@ -59,6 +59,10 @@ inputs:
     description: 'Package description.'
     default: ''
     required: false
+  conflicts:
+    description: 'Package conflicts.'
+    default: ''
+    required: false
   compress_type:
     description: >
       Set the compression type used when building.
