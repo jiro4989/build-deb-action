@@ -198,7 +198,7 @@ jobs:
           find /usr/lib/testbin/
           cat /usr/lib/testbin/testbin.conf
 
-  test-depends:
+  test-all-parameters:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -232,6 +232,7 @@ jobs:
           homepage: 'https://github.com/jiro4989/build-deb-action'
           section: 'unknown'
           priority: 'required'
+          conflicts: 'hello-traditional'
         id: build
       - name: Install deb package
         run: sudo dpkg -i ${{ steps.build.outputs.file_name }}
@@ -248,6 +249,9 @@ jobs:
           dpkg-query -W -f='${Installed-Size}\t${Package}\n' |
           sort -nr |
           grep nimjson
+      - name: Test Conflicts parameter
+        run: >
+          dpkg -I ./*.deb | grep -E 'Conflicts: hello-traditional'
 
   test-debian:
     runs-on: ubuntu-latest

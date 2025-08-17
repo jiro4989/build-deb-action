@@ -20,6 +20,7 @@ type TemplateParam struct {
 	Section       string
 	Priority      string
 	Description   string
+	Conflicts     string
 }
 
 func loadTemplateParam() (*TemplateParam, error) {
@@ -35,6 +36,7 @@ func loadTemplateParam() (*TemplateParam, error) {
 		Section:       os.Getenv("INPUT_SECTION"),
 		Priority:      os.Getenv("INPUT_PRIORITY"),
 		Description:   os.Getenv("INPUT_DESC"),
+		Conflicts:     os.Getenv("INPUT_CONFLICTS"),
 	}
 	if err := p.validate(); err != nil {
 		return nil, err

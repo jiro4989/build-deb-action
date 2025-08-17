@@ -46,6 +46,10 @@ inputs:
     description: 'Package description.'
     default: 'no description'
     required: false
+  conflicts:
+    description: 'Package conflicts.'
+    default: ''
+    required: false
   compress_type:
     description: >
       Set the compression type used when building.
@@ -64,7 +68,7 @@ outputs:
     description: 'File name of resulting .deb file.'
 runs:
   using: 'docker'
-  image: 'docker://jiro4989/build-deb-action:4.2.1'
+  image: 'docker://jiro4989/build-deb-action:4.3.0'
 
 # Ref: https://haya14busa.github.io/github-action-brandings/
 # TODO: update branding if you want.

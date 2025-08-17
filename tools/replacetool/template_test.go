@@ -144,7 +144,8 @@ Maintainer: jiro4989
 				Homepage:      "https://github.com/jiro4989/nimjson",
 				Section:       "unknown",
 				Priority:      "required",
-				Description:   "sample description.",
+				Description:   "sample description.\nsample description2.\n\nsample description3.",
+				Conflicts:     "hello-traditional",
 			},
 			want: `Package: nimjson
 Version: 1.0.0
@@ -156,6 +157,10 @@ Homepage: https://github.com/jiro4989/nimjson
 Section: unknown
 Priority: required
 Description: sample description.
+ sample description2.
+ .
+ sample description3.
+Conflicts: hello-traditional
 `,
 			wantErr: false,
 		},
