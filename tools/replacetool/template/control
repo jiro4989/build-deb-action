@@ -21,3 +21,6 @@ Priority: {{ .Priority }}
 {{ if .Description -}}
 Description: {{ .Description }}
 {{ end -}}
+{{ if .Conflicts -}}
+Conflicts: {{ .Conflicts }}
+{{ end -}}
