@@ -5,7 +5,7 @@ ENV CGO_ENABLED=0
 
 RUN --mount=type=bind,source=tools/replacetool,target=. go build -o /replacetool
 
-FROM ubuntu:24.04 AS runtime
+FROM ubuntu:26.04 AS runtime
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
